@@ -134,8 +134,20 @@
       </div>
       <pre><code>&lt;AstralThemeProvider colors={{ primary_color: <span class="s">'#0d9488'</span> }}&gt;
   &lt;App /&gt;
-&lt;/AstralThemeProvider&gt;</code></pre>
+&lt;/AstralThemeProvider&gt;
+
+<span class="c">// live, unsaved preview (e.g. a brand-color editor):</span>
+<span class="k">const</span> { setPreview } = useThemePreview();
+setPreview({ primary_color: <span class="s">'#e8590c'</span> });
+
+<span class="c">// buildOrgCss(colors) returns the raw &lt;style&gt; text if you need to inject it yourself (SSR)</span></code></pre>
     </div>
+    <p style="margin-top:14px">Beyond the brand palette, the token layer exposes semantic vars you can use in
+    your own CSS: <code>--au-text</code>, <code>--au-dim</code>, <code>--au-line</code>,
+    <code>--au-surface-2</code>, <code>--au-brand</code>, <code>--au-green</code> /
+    <code>--au-amber</code> / <code>--au-red</code> / <code>--au-blue</code>, and
+    <code>--au-accent</code> (a warm-orange secondary accent), plus the raw
+    <code>--astral-color-*</code> palette. All are theme-aware via <code>light-dark()</code>.</p>
 
     <h2 id="buttons">Buttons</h2>
     <div class="ex">
@@ -194,7 +206,12 @@
       <div class="ex-prev"><button class="au-btn primary" id="openModal">Open modal</button></div>
       <pre><code>&lt;AstralModal opened={open} onClose={close} title=<span class="s">"Edit profile"</span> width={460}&gt;
   ...
-&lt;/AstralModal&gt;</code></pre>
+&lt;/AstralModal&gt;
+
+<span class="c">// AstralDrawer: same props, slides in from the right</span>
+&lt;AstralDrawer opened={open} onClose={close} title=<span class="s">"Filters"</span> width={440}&gt;
+  ...
+&lt;/AstralDrawer&gt;</code></pre>
     </div>
 
     <h2 id="confirm">ConfirmModal</h2>
@@ -222,7 +239,11 @@ notifications.update({ id, message: <span class="s">'Done'</span>, color: <span 
     <h2 id="date">DateInput</h2>
     <div class="ex">
       <div class="ex-prev"><div class="au-input field"><input type="date" value="2026-06-06" style="border:0;background:transparent;color:var(--au-text);font:inherit;outline:none;width:100%"></div></div>
-      <pre><code>&lt;DateInput type=<span class="s">"date"</span> value={date} onChange={setDate} /&gt;</code></pre>
+      <pre><code>&lt;DateInput type=<span class="s">"date"</span> value={date} onChange={setDate} /&gt;
+
+<span class="c">// helpers: Date -> input string (local), e.g. for min/max or defaults</span>
+dateToInputStr(date);      <span class="c">// "2026-06-06"</span>
+dateTimeToInputStr(date);  <span class="c">// "2026-06-06T14:30"</span></code></pre>
     </div>
 
     <h2 id="status">StatusBadge</h2>
@@ -262,7 +283,10 @@ notifications.update({ id, message: <span class="s">'Done'</span>, color: <span 
         <span class="au-delta down">▼ 4%</span>
       </div>
       <pre><code>&lt;Sparkline points={[3,5,4,8,7,11]} color=<span class="s">"violet.6"</span> /&gt;
-&lt;Delta current={420} previous={377} /&gt;</code></pre>
+&lt;Delta current={420} previous={377} /&gt;
+
+<span class="c">// chartColor() resolves "hue.shade" -> var(--astral-color-...); hex/var pass through</span>
+chartColor(<span class="s">'violet.6'</span>); <span class="c">// "var(--astral-color-violet-6)"</span></code></pre>
     </div>
 
     <h2 id="donut">Donut, Funnel &amp; Stacked bars</h2>
