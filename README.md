@@ -109,8 +109,12 @@ To use a local build in another project without publishing: `pnpm link --global`
 
 ## Releasing
 
-Versioned on npm as `@astralui/core`. CI builds + type-checks every push; tagging a release
-(`v*`) publishes to npm via the `publish` workflow (needs an `NPM_TOKEN` repo secret).
+Versioned on npm as `@astralui/core`. CI builds + type-checks every push; publishing a
+GitHub Release (`v*`) publishes to npm via the `publish` workflow using **npm Trusted
+Publishing (OIDC)** - no token or secret. One-time setup on npmjs.com: the package's
+Settings -> Trusted Publisher -> GitHub Actions, repo `UnboundedTechnologies/AstralUI`,
+workflow `publish.yml`. The very first publish is done manually (`npm publish --access public`)
+since the trusted publisher is configured on an existing package.
 
 ## License
 
