@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en" data-astral-scheme="dark" style="color-scheme:dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AstralUI - a self-contained React design system</title>
+<meta name="description" content="AstralUI (@astralui/core) is a dependency-free React design system: theme engine, design tokens, and focused UI components. Light and dark, per-brand theming, no CSS-in-JS runtime." />
+<meta property="og:title" content="AstralUI - a self-contained React design system" />
+<meta property="og:description" content="Theme engine, design tokens, and dependency-free UI components. Light/dark + per-brand theming, built on CSS variables and light-dark()." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236741d9'/%3E%3Cpath d='M16 6l3 7 7 3-7 3-3 7-3-7-7-3 7-3z' fill='white'/%3E%3C/svg%3E" />
+
+<!-- The real, published package stylesheet from the npm CDN. Everything au-* and
+     every --astral-* token below is the actual shipped CSS, not a re-creation. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.1/dist/styles.css" />
+
+<style>
+  :root { --lp-max: 1120px; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--astral-color-body); color: var(--astral-color-text); }
+
+  a { color: inherit; }
+  ::selection { background: color-mix(in srgb, var(--astral-primary-color-filled) 35%, transparent); }
+  :focus-visible { outline: 2px solid var(--astral-primary-color-filled); outline-offset: 2px; border-radius: 6px; }
+
+  .lp-wrap { max-width: var(--lp-max); margin: 0 auto; padding: 0 24px; }
+
+  /* ---- nav ---- */
+  .lp-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--astral-color-body) 78%, transparent);
+    border-bottom: 1px solid var(--astral-color-default-border); }
+  .lp-nav-in { display: flex; align-items: center; gap: 18px; height: 60px; }
+  .lp-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.02em; font-size: 16px; }
+  .lp-mark { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+    background: var(--astral-primary-color-filled); color: #fff; }
+  .lp-mark svg { width: 17px; height: 17px; }
+  .lp-nav-links { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .lp-nav-links a { font-size: 13px; font-weight: 600; color: var(--astral-color-dimmed); padding: 8px 11px;
+    border-radius: 9px; text-decoration: none; transition: color .15s, background .15s; }
+  .lp-nav-links a:hover { color: var(--astral-color-text); background: color-mix(in srgb, var(--astral-color-dimmed) 12%, transparent); }
+  .lp-themebtn { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; cursor: pointer;
+    border: 1px solid var(--astral-color-default-border); background: transparent; color: var(--astral-color-text);
+    transition: border-color .15s; }
+  .lp-themebtn:hover { border-color: color-mix(in srgb, var(--astral-primary-color-filled) 50%, transparent); }
+  .lp-themebtn svg { width: 18px; height: 18px; }
+
+  /* ---- hero ---- */
+  .lp-hero { padding: 78px 0 26px; position: relative; overflow: hidden; }
+  .lp-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(48% 60% at 18% 0%, color-mix(in srgb, var(--astral-primary-color-filled) 16%, transparent), transparent 70%); }
+  .lp-hero > * { position: relative; }
+  .lp-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
+    letter-spacing: .02em; color: var(--astral-primary-color-light-color);
+    background: var(--astral-primary-color-light); border: 1px solid color-mix(in srgb, var(--astral-primary-color-filled) 30%, transparent);
+    padding: 5px 12px; border-radius: 999px; }
+  .lp-h1 { font-size: clamp(38px, 6vw, 66px); line-height: 1.02; letter-spacing: -.035em; font-weight: 800;
+    margin: 20px 0 0; max-width: 16ch; }
+  .lp-h1 .accent { color: var(--astral-primary-color-light-color); }
+  .lp-sub { font-size: clamp(15px, 2vw, 18px); line-height: 1.6; color: var(--astral-color-dimmed);
+    max-width: 56ch; margin-top: 20px; }
+  .lp-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; align-items: center; }
+  .lp-install { display: inline-flex; align-items: center; gap: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13.5px; color: var(--astral-color-text); background: color-mix(in srgb, var(--astral-color-dimmed) 12%, transparent);
+    border: 1px solid var(--astral-color-default-border); border-radius: 11px; padding: 11px 14px; }
+  .lp-install .dollar { color: var(--astral-color-dimmed); }
+  .lp-copy { cursor: pointer; border: 0; background: none; color: var(--astral-color-dimmed); display: grid; place-items: center;
+    padding: 2px; border-radius: 6px; transition: color .15s; }
+  .lp-copy:hover { color: var(--astral-color-text); }
+  .lp-copy svg { width: 16px; height: 16px; display: block; }
+
+  /* ---- playground ---- */
+  .lp-play { margin-top: 46px; background: var(--astral-app-card, color-mix(in srgb, var(--astral-color-dimmed) 8%, transparent));
+    border: 1px solid var(--astral-color-default-border); border-radius: 20px; padding: 8px;
+    box-shadow: 0 30px 70px rgba(0,0,0,.28); }
+  .lp-play-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; padding: 16px 18px; }
+  .lp-play-group { display: flex; align-items: center; gap: 10px; }
+  .lp-play-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--astral-color-dimmed); }
+  .lp-swatches { display: flex; gap: 7px; }
+  .lp-sw { width: 24px; height: 24px; border-radius: 7px; cursor: pointer; border: 2px solid transparent;
+    transition: transform .12s, border-color .12s; }
+  .lp-sw:hover { transform: scale(1.12); }
+  .lp-sw[aria-pressed="true"] { border-color: var(--astral-color-text); }
+  .lp-play-canvas { border-top: 1px solid var(--astral-color-default-border); padding: 22px 18px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; align-items: start; }
+
+  /* ---- generic section ---- */
+  .lp-section { padding: 64px 0; }
+  .lp-kicker { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--astral-primary-color-light-color); }
+  .lp-h2 { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -.03em; font-weight: 800; margin: 10px 0 0; max-width: 22ch; }
+  .lp-lead { font-size: 16px; line-height: 1.6; color: var(--astral-color-dimmed); max-width: 60ch; margin-top: 14px; }
+
+  /* ---- bento ---- */
+  .lp-bento { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px; margin-top: 34px; }
+  .lp-bento .b { background: var(--astral-app-card, color-mix(in srgb, var(--astral-color-dimmed) 7%, transparent));
+    border: 1px solid var(--astral-color-default-border); border-radius: 16px; padding: 22px; }
+  .lp-bento .b.tall { grid-row: span 2; }
+  .lp-bento .b.wide { grid-column: span 2; }
+  .lp-bic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 14px;
+    background: var(--astral-primary-color-light); color: var(--astral-primary-color-light-color); }
+  .lp-bic svg { width: 20px; height: 20px; }
+  .lp-bt { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+  .lp-bd { font-size: 13.5px; line-height: 1.6; color: var(--astral-color-dimmed); margin-top: 6px; }
+  .lp-codeblock { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.7;
+    background: var(--astral-color-body); border: 1px solid var(--astral-color-default-border); border-radius: 12px;
+    padding: 14px 16px; margin-top: 16px; overflow-x: auto; color: var(--astral-color-dimmed); }
+  .lp-codeblock .k { color: var(--astral-primary-color-light-color); }
+  .lp-codeblock .s { color: var(--au-green, #34d399); }
+
+  /* ---- gallery ---- */
+  .lp-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 34px; }
+  .lp-demo { background: var(--astral-app-card, color-mix(in srgb, var(--astral-color-dimmed) 7%, transparent));
+    border: 1px solid var(--astral-color-default-border); border-radius: 16px; padding: 18px 20px; }
+  .lp-demo h3 { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--astral-color-dimmed); margin: 0 0 16px; }
+  .lp-row { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+  .lp-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ---- palette ---- */
+  .lp-pal { display: flex; gap: 6px; margin-top: 18px; flex-wrap: wrap; }
+  .lp-pal .sw { flex: 1; min-width: 64px; height: 58px; border-radius: 10px; display: flex; align-items: flex-end;
+    padding: 6px; font-size: 9.5px; font-weight: 700; color: #fff; font-family: ui-monospace, monospace; }
+
+  /* ---- footer ---- */
+  .lp-foot { border-top: 1px solid var(--astral-color-default-border); padding: 40px 0 60px; margin-top: 30px; }
+  .lp-foot-in { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; }
+  .lp-foot a { color: var(--astral-color-dimmed); text-decoration: none; font-size: 13.5px; font-weight: 600; transition: color .15s; }
+  .lp-foot a:hover { color: var(--astral-color-text); }
+  .lp-foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .lp-muted { color: var(--astral-color-dimmed); font-size: 13px; }
+
+  @media (max-width: 860px) {
+    .lp-bento { grid-template-columns: 1fr 1fr; }
+    .lp-bento .b.wide { grid-column: span 2; }
+    .lp-bento .b.tall { grid-row: auto; }
+    .lp-gallery { grid-template-columns: 1fr; }
+    .lp-nav-links a.hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="lp-nav">
+  <div class="lp-wrap lp-nav-in">
+    <span class="lp-brand">
+      <span class="lp-mark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.1L20.5 10l-6.1 2.4L12 18l-2.4-5.6L3.5 10l6.1-1.9z"/></svg></span>
+      AstralUI
+    </span>
+    <div class="lp-nav-links">
+      <a href="#components" class="hide-sm">Components</a>
+      <a href="#theming" class="hide-sm">Theming</a>
+      <a href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">npm</a>
+      <a href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener">GitHub</a>
+      <button class="lp-themebtn" id="themeBtn" aria-label="Toggle color scheme" title="Toggle light / dark"></button>
+    </div>
+  </div>
+</nav>
+
+<header class="lp-hero">
+  <div class="lp-wrap">
+    <span class="lp-eyebrow">React design system · v0.1.1</span>
+    <h1 class="lp-h1">The design system that ships as <span class="accent">one dependency.</span></h1>
+    <p class="lp-sub">AstralUI is a self-contained React component library and theme engine. Light and dark out of the box, per-brand theming from a single hex, and no CSS-in-JS runtime - just design tokens, <code>light-dark()</code>, and focused components.</p>
+    <div class="lp-cta">
+      <div class="lp-install">
+        <span><span class="dollar">$</span> pnpm add @astralui/core</span>
+        <button class="lp-copy" id="copyBtn" aria-label="Copy install command" title="Copy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+        </button>
+      </div>
+      <a class="au-btn primary" href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">View on npm</a>
+      <a class="au-btn" href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.93.68 1.88v2.79c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        Star on GitHub
+      </a>
+    </div>
+
+    <!-- live playground: this whole panel restyles instantly from the controls -->
+    <section class="lp-play" aria-label="Live playground">
+      <div class="lp-play-bar">
+        <div class="lp-play-group">
+          <span class="lp-play-label">Brand</span>
+          <div class="lp-swatches" id="swatches">
+            <button class="lp-sw" data-hex="#6741d9" style="background:#6741d9" aria-pressed="true" title="Violet"></button>
+            <button class="lp-sw" data-hex="#2563eb" style="background:#2563eb" aria-pressed="false" title="Blue"></button>
+            <button class="lp-sw" data-hex="#0d9488" style="background:#0d9488" aria-pressed="false" title="Teal"></button>
+            <button class="lp-sw" data-hex="#e8590c" style="background:#e8590c" aria-pressed="false" title="Orange"></button>
+            <button class="lp-sw" data-hex="#db2777" style="background:#db2777" aria-pressed="false" title="Pink"></button>
+          </div>
+        </div>
+        <div class="lp-play-group">
+          <span class="lp-play-label">Try it</span>
+          <button class="au-btn primary sm" id="openModal">Open modal</button>
+          <button class="au-btn sm" id="toastOk">Success toast</button>
+          <button class="au-btn sm" id="toastLoad">Loading toast</button>
+        </div>
+      </div>
+      <div class="lp-play-canvas">
+        <div class="au-status on"><span class="dot"></span>Account live</div>
+        <div class="lp-row">
+          <button class="au-btn primary">Primary</button>
+          <button class="au-btn">Secondary</button>
+        </div>
+        <div class="au-input"><input type="text" value="hello@astralui.dev" /></div>
+        <div class="lp-row">
+          <span class="au-tag">DRAFT</span>
+          <span class="au-tag prem">PREMIUM</span>
+          <span class="au-badge-ok"><span class="dot"></span>Verified</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>
+
+<main>
+  <!-- value props -->
+  <section class="lp-section" id="theming">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Why AstralUI</span>
+      <h2 class="lp-h2">A theme engine, not just components.</h2>
+      <p class="lp-lead">Every color resolves through <code>--astral-*</code> CSS variables and <code>light-dark()</code>. Switch schemes by flipping one attribute; rebrand the whole app by passing a single color.</p>
+
+      <div class="lp-bento">
+        <div class="b tall">
+          <div class="lp-bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z"/></svg></div>
+          <div class="lp-bt">Light &amp; dark, free</div>
+          <div class="lp-bd">Both schemes are built into the tokens. No duplicate stylesheets, no theme objects to thread through - set <code>data-astral-scheme</code> and the entire surface responds.</div>
+          <div class="lp-codeblock"><span class="k">import</span> { ColorSchemeProvider } <span class="k">from</span> <span class="s">'@astralui/core'</span>;
+
+&lt;<span class="k">ColorSchemeProvider</span> defaultScheme=<span class="s">"dark"</span>&gt;
+  &lt;App /&gt;
+&lt;/<span class="k">ColorSchemeProvider</span>&gt;</div>
+        </div>
+        <div class="b">
+          <div class="lp-bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+          <div class="lp-bt">One hex, full palette</div>
+          <div class="lp-bd"><code>generateColors()</code> builds a 10-shade palette from a single brand color - try the swatches above.</div>
+        </div>
+        <div class="b">
+          <div class="lp-bic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg></div>
+          <div class="lp-bt">Zero runtime</div>
+          <div class="lp-bd">No CSS-in-JS, no styled-components. Plain CSS variables that the browser resolves natively.</div>
+        </div>
+        <div class="b wide">
+          <div class="lp-bt">Ships with the essentials</div>
+          <div class="lp-bd">Modal, Drawer, Select, Menu, PinInput, a toast system, a freeze-proof DateInput, and a Spinner - each portalled, accessible, and theme-aware. Bring <code>react</code> and <code>@tabler/icons-react</code>; that's it.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- component gallery -->
+  <section class="lp-section" id="components">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Components</span>
+      <h2 class="lp-h2">Everything below is the real shipped CSS.</h2>
+      <p class="lp-lead">This page loads <code>@astralui/core</code> straight from the npm CDN. What you see renders from the exact classes the package exports.</p>
+
+      <div class="lp-gallery">
+        <div class="lp-demo">
+          <h3>Buttons</h3>
+          <div class="lp-row">
+            <button class="au-btn primary">Primary</button>
+            <button class="au-btn">Default</button>
+            <button class="au-btn ok">Confirm</button>
+            <button class="au-btn danger">Delete</button>
+            <button class="au-btn green">Connect</button>
+            <button class="au-btn" disabled>Disabled</button>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Status &amp; tags</h3>
+          <div class="lp-row">
+            <span class="au-status on"><span class="dot"></span>Running</span>
+            <span class="au-status paused"><span class="dot"></span>Paused</span>
+            <span class="au-status off"><span class="dot"></span>Stopped</span>
+            <span class="au-tag">LABEL</span>
+            <span class="au-tag prem">PRO</span>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Inputs</h3>
+          <div class="lp-stack">
+            <div>
+              <div class="au-field-label">Workspace name</div>
+              <div class="au-input"><input type="text" placeholder="Acme orbital" value="Northwind Labs" /></div>
+            </div>
+            <textarea class="au-textarea" placeholder="Notes...">Multi-line input with a focus ring tinted by the brand color.</textarea>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Alerts</h3>
+          <div class="lp-stack">
+            <div class="au-alert brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div><div class="t">Heads up</div>Brand-tinted informational alert.</div></div>
+            <div class="au-alert warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg><div>Approaching the daily limit.</div></div>
+            <div class="au-alert err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg><div>Connection failed. Please try again.</div></div>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Select menu</h3>
+          <div style="position:relative; height:190px;">
+            <button class="au-btn au-select-trigger" style="max-width:240px;"><span>United States</span><span class="au-select-caret"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+            <div class="au-select-menu" style="position:absolute; left:0; top:46px; width:240px;">
+              <div class="au-select-opt on">United States</div>
+              <div class="au-select-opt">United Kingdom</div>
+              <div class="au-select-opt">Germany</div>
+              <div class="au-select-opt">Japan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Action menu</h3>
+          <div class="au-menu" style="position:relative; width:100%; box-shadow:none;">
+            <button class="au-menu-item"><span class="au-menu-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4h10M11 12h10M11 20h10M3 4h.01M3 12h.01M3 20h.01"/></svg></span><span class="au-menu-label">Edit details</span></button>
+            <button class="au-menu-item"><span class="au-menu-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span><span class="au-menu-label">Duplicate</span></button>
+            <div class="au-menu-divider"></div>
+            <button class="au-menu-item danger"><span class="au-menu-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></span><span class="au-menu-label">Delete</span></button>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Code input</h3>
+          <div class="au-pin">
+            <input class="au-pin-box" value="4" maxlength="1" />
+            <input class="au-pin-box" value="2" maxlength="1" />
+            <input class="au-pin-box" value="9" maxlength="1" />
+            <input class="au-pin-box" value="1" maxlength="1" />
+            <input class="au-pin-box" value="" maxlength="1" />
+            <input class="au-pin-box" value="" maxlength="1" />
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Toggle, checkbox &amp; spinner</h3>
+          <div class="lp-row" style="gap:20px;">
+            <button class="au-toggle on" id="demoToggle" aria-label="Toggle"><i></i></button>
+            <span class="au-ck on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>
+            <span class="au-ck"></span>
+            <span class="au-spinner"></span>
+            <div class="au-seg" style="min-width:170px;"><button class="on">Day</button><button>Week</button><button>Month</button></div>
+          </div>
+        </div>
+
+        <div class="lp-demo" style="grid-column:1 / -1;">
+          <h3>Table</h3>
+          <div class="au-tablewrap">
+            <table class="au-table">
+              <thead><tr><th>Campaign</th><th>Status</th><th>Sent</th><th>Replies</th></tr></thead>
+              <tbody>
+                <tr><td>Q3 Outreach</td><td><span class="au-status on" style="padding:3px 9px;"><span class="dot"></span>Active</span></td><td class="num">1,284</td><td class="num">412</td></tr>
+                <tr><td>Founder intros</td><td><span class="au-status paused" style="padding:3px 9px;"><span class="dot"></span>Paused</span></td><td class="num">906</td><td class="num">377</td></tr>
+                <tr><td>Reactivation</td><td><span class="au-status off" style="padding:3px 9px;"><span class="dot"></span>Draft</span></td><td class="num">0</td><td class="num">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- palette -->
+  <section class="lp-section">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Tokens</span>
+      <h2 class="lp-h2">A palette generated from your brand.</h2>
+      <p class="lp-lead">Pick a swatch in the playground and this scale regenerates live - the same <code>generateColors()</code> that drives the whole theme.</p>
+      <div class="lp-pal" id="palette"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="lp-foot">
+  <div class="lp-wrap lp-foot-in">
+    <span class="lp-muted">MIT © Unbounded Technologies · built with AstralUI</span>
+    <div class="lp-foot-links">
+      <a href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">npm</a>
+      <a href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/UnboundedTechnologies/AstralUI/blob/main/README.md" target="_blank" rel="noopener">Docs</a>
+      <a href="https://github.com/UnboundedTechnologies/AstralUI/releases" target="_blank" rel="noopener">Releases</a>
+    </div>
+  </div>
+</footer>
+
+<!-- toast host (matches the package's AstralToaster markup) -->
+<div class="au-toast-host" id="toastHost"></div>
+
+<!-- demo modal (matches AstralModal markup) -->
+<div class="au-modal-overlay" id="modal" style="display:none;">
+  <div class="au-modal-panel" style="max-width:440px;">
+    <div class="au-modal-head">
+      <span class="au-modal-title">Create campaign</span>
+      <button class="au-modal-x" id="modalX" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="au-modal-body">
+      <div class="clay-form">
+        <div>
+          <div class="au-field-label">Campaign name</div>
+          <div class="au-input"><input type="text" placeholder="Q4 expansion" /></div>
+        </div>
+        <div>
+          <div class="au-field-label">Notes</div>
+          <textarea class="au-textarea" placeholder="What is this campaign for?"></textarea>
+        </div>
+        <div class="clay-actions">
+          <button class="au-btn" id="modalCancel">Cancel</button>
+          <button class="au-btn primary" id="modalSave">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import chroma from 'https://cdn.jsdelivr.net/npm/chroma-js@3/+esm';
+
+  /* generateColors() - mirrors @astralui/core's palette generator so the demo
+     reflects the real algorithm (same lightness/saturation maps + chroma LCH). */
+  const LIGHTNESS_MAP = [0.96, 0.907, 0.805, 0.697, 0.605, 0.547, 0.518, 0.445, 0.395, 0.34];
+  const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];
+  function generateColors(color) {
+    const base = chroma(color);
+    const baseL = base.get('hsl.l');
+    const closestL = LIGHTNESS_MAP.reduce((p, c) => Math.abs(c - baseL) < Math.abs(p - baseL) ? c : p);
+    const baseLi = LIGHTNESS_MAP.indexOf(closestL);
+    const baseS = base.get('hsl.s');
+    const sat = SATURATION_MAP.map((s, i) => i === baseLi ? baseS : baseS - s);
+    const hue = base.get('hsl.h');
+    return LIGHTNESS_MAP.map((l, i) =>
+      chroma.hsl(hue, sat[i], l).hex()
+    );
+  }
+
+  const root = document.documentElement;
+
+  function applyBrand(hex) {
+    const shades = generateColors(hex);     // [0..9]
+    const r = root.style;
+    r.setProperty('--astral-primary-color-filled', shades[6]);
+    r.setProperty('--astral-primary-color-filled-hover', shades[7]);
+    r.setProperty('--astral-primary-color-light', chroma(hex).alpha(0.15).css());
+    r.setProperty('--astral-primary-color-light-hover', chroma(hex).alpha(0.22).css());
+    r.setProperty('--astral-primary-color-light-color', shades[3]);
+    // expose all shades for the palette strip + violet token used by au-brand-text
+    shades.forEach((c, i) => r.setProperty('--astral-color-violet-' + i, c));
+    renderPalette(shades);
+    document.querySelectorAll('.lp-sw').forEach(b =>
+      b.setAttribute('aria-pressed', String(b.dataset.hex.toLowerCase() === hex.toLowerCase())));
+  }
+
+  function renderPalette(shades) {
+    const el = document.getElementById('palette');
+    el.innerHTML = shades.map((c, i) =>
+      `<div class="sw" style="background:${c}; color:${chroma(c).luminance() > 0.45 ? '#000' : '#fff'}">${i}</div>`).join('');
+  }
+
+  document.getElementById('swatches').addEventListener('click', e => {
+    const b = e.target.closest('.lp-sw'); if (b) applyBrand(b.dataset.hex);
+  });
+
+  /* theme toggle */
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+  const themeBtn = document.getElementById('themeBtn');
+  function setScheme(s) {
+    root.setAttribute('data-astral-scheme', s);
+    root.style.colorScheme = s;
+    themeBtn.innerHTML = s === 'dark' ? MOON : SUN;
+    try { localStorage.setItem('astral-color-scheme', s); } catch {}
+  }
+  themeBtn.addEventListener('click', () =>
+    setScheme(root.getAttribute('data-astral-scheme') === 'dark' ? 'light' : 'dark'));
+
+  /* copy install */
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('pnpm add @astralui/core'); } catch {}
+    const o = copyBtn.innerHTML;
+    copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>';
+    setTimeout(() => copyBtn.innerHTML = o, 1300);
+  });
+
+  /* modal */
+  const modal = document.getElementById('modal');
+  const openM = () => modal.style.display = 'grid';
+  const closeM = () => modal.style.display = 'none';
+  document.getElementById('openModal').addEventListener('click', openM);
+  document.getElementById('modalX').addEventListener('click', closeM);
+  document.getElementById('modalCancel').addEventListener('click', closeM);
+  document.getElementById('modalSave').addEventListener('click', () => { closeM(); toast({ title: 'Campaign created', msg: 'Q4 expansion is ready.', kind: 'ok' }); });
+  modal.addEventListener('mousedown', e => { if (e.target === modal) closeM(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
+
+  /* toasts (matches AstralToaster DOM) */
+  const host = document.getElementById('toastHost');
+  const ICONS = {
+    ok: ['#16a34a', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'],
+    err: ['#dc2626', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>'],
+  };
+  function toast({ title, msg, kind = 'ok', accent, lead, autoClose = 3200 }) {
+    const [col, ic] = ICONS[kind] || ICONS.ok;
+    const el = document.createElement('div');
+    el.className = 'au-toast';
+    el.style.setProperty('--au-toast-accent', accent || col);
+    el.innerHTML =
+      `<div class="au-toast-lead">${lead || ic}</div>
+       <div class="au-toast-body">${title ? `<div class="au-toast-title">${title}</div>` : ''}<div class="au-toast-msg">${msg}</div></div>
+       <button class="au-toast-x" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`;
+    el.querySelector('.au-toast-x').addEventListener('click', () => el.remove());
+    host.appendChild(el);
+    if (autoClose) setTimeout(() => el.remove(), autoClose);
+    return el;
+  }
+  document.getElementById('toastOk').addEventListener('click', () =>
+    toast({ title: 'Saved', msg: 'Your changes are live.', kind: 'ok' }));
+  document.getElementById('toastLoad').addEventListener('click', () => {
+    const el = toast({ msg: 'Importing 2,400 contacts...', accent: '#6741d9', lead: '<span class="au-toast-spin"></span>', autoClose: 0 });
+    setTimeout(() => {
+      el.style.setProperty('--au-toast-accent', '#16a34a');
+      el.innerHTML = `<div class="au-toast-lead">${ICONS.ok[1]}</div><div class="au-toast-body"><div class="au-toast-title">Import complete</div><div class="au-toast-msg">2,400 contacts added.</div></div><button class="au-toast-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`;
+      el.querySelector('.au-toast-x').addEventListener('click', () => el.remove());
+      setTimeout(() => el.remove(), 2600);
+    }, 1900);
+  });
+
+  /* demo toggle */
+  document.getElementById('demoToggle').addEventListener('click', e =>
+    e.currentTarget.classList.toggle('on'));
+
+  /* init */
+  try { const s = localStorage.getItem('astral-color-scheme'); setScheme(s === 'light' ? 'light' : 'dark'); }
+  catch { setScheme('dark'); }
+  applyBrand('#6741d9');
+</script>
+</body>
+</html>
