@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" data-astral-scheme="dark" style="color-scheme:dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AstralUI - Documentation</title>
+<meta name="description" content="API documentation for @astralui/core: install, theming, and every component." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236741d9'/%3E%3Cpath d='M16 6l3 7 7 3-7 3-3 7-3-7-7-3 7-3z' fill='white'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.3/dist/styles.css" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: var(--astral-color-body); color: var(--astral-color-text); }
+  ::selection { background: color-mix(in srgb, var(--astral-primary-color-filled) 35%, transparent); }
+  :focus-visible { outline: 2px solid var(--astral-primary-color-filled); outline-offset: 2px; }
+  .doc { display: grid; grid-template-columns: 240px 1fr; max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 24px; }
+  /* sidebar */
+  .doc-side { position: sticky; top: 0; align-self: start; height: 100dvh; overflow-y: auto; padding: 26px 0 40px; border-right: 1px solid var(--astral-color-default-border); }
+  .doc-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.02em; font-size: 16px; margin-bottom: 8px; text-decoration: none; color: inherit; }
+  .doc-brand .m { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--astral-primary-color-filled); color: #fff; }
+  .doc-brand .m svg { width: 16px; height: 16px; }
+  .doc-ver { font-size: 11px; color: var(--astral-color-dimmed); margin: 0 0 18px 36px; }
+  .doc-nav { display: flex; flex-direction: column; gap: 1px; }
+  .doc-nav .grp { font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--astral-color-dimmed); margin: 16px 0 6px; }
+  .doc-nav a { font-size: 13px; color: var(--astral-color-dimmed); text-decoration: none; padding: 5px 10px; border-radius: 8px; transition: color .12s, background .12s; }
+  .doc-nav a:hover { color: var(--astral-color-text); background: color-mix(in srgb, var(--astral-color-dimmed) 12%, transparent); }
+  /* content */
+  .doc-main { padding: 34px 0 90px; min-width: 0; }
+  .doc-main h1 { font-size: 36px; letter-spacing: -.03em; margin: 0 0 8px; }
+  .doc-main h2 { font-size: 23px; letter-spacing: -.02em; margin: 44px 0 10px; padding-top: 12px; }
+  .doc-main h3 { font-size: 15px; margin: 22px 0 6px; }
+  .doc-main p { color: var(--astral-color-dimmed); line-height: 1.65; max-width: 70ch; }
+  .doc-main code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; background: color-mix(in srgb, var(--astral-color-dimmed) 14%, transparent); padding: 1px 6px; border-radius: 5px; }
+  pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.7; background: color-mix(in srgb, var(--astral-color-dimmed) 9%, transparent); border: 1px solid var(--astral-color-default-border); border-radius: 12px; padding: 15px 17px; overflow-x: auto; }
+  pre code { background: none; padding: 0; }
+  .k { color: var(--astral-primary-color-light-color); }
+  .s { color: var(--au-green, #34d399); }
+  .c { color: var(--astral-color-dimmed); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--astral-color-default-border); vertical-align: top; }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--astral-color-dimmed); }
+  td code { white-space: nowrap; }
+  .lead { font-size: 16px; color: var(--astral-color-dimmed); }
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; color: var(--astral-primary-color-light-color); background: var(--astral-primary-color-light); border-radius: 999px; padding: 2px 9px; }
+  @media (max-width: 820px){ .doc { grid-template-columns: 1fr; } .doc-side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--astral-color-default-border); } }
+</style>
+</head>
+<body>
+<div class="doc">
+  <aside class="doc-side">
+    <a class="doc-brand" href="./index.html"><span class="m"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.1L20.5 10l-6.1 2.4L12 18l-2.4-5.6L3.5 10l6.1-1.9z"/></svg></span>AstralUI</a>
+    <div class="doc-ver">@astralui/core · v0.1.3</div>
+    <nav class="doc-nav">
+      <div class="grp">Getting started</div>
+      <a href="#install">Install</a>
+      <a href="#setup">Setup</a>
+      <a href="#color-scheme">Color scheme</a>
+      <a href="#theming">Per-brand theming</a>
+      <a href="#tokens">Design tokens</a>
+      <div class="grp">Components</div>
+      <a href="#modal">Modal &amp; Drawer</a>
+      <a href="#confirm">ConfirmModal</a>
+      <a href="#select">Select</a>
+      <a href="#menu">Menu</a>
+      <a href="#pin">PinInput</a>
+      <a href="#toast">Notifications</a>
+      <a href="#date">DateInput</a>
+      <a href="#spinner">Spinner</a>
+      <div class="grp">Charts</div>
+      <a href="#charts">Sparkline / Delta</a>
+      <a href="#charts">Donut / Funnel / Stacked</a>
+      <div class="grp">Layouts</div>
+      <a href="#auth">Auth shell</a>
+      <a href="#backgrounds">Backgrounds</a>
+      <a href="#utilities">Utility classes</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <h1>Documentation</h1>
+    <p class="lead">AstralUI (<code>@astralui/core</code>) is a self-contained, dependency-free React design system. Import the stylesheet once, wrap your app, and use the components. Everything is theme-aware (light/dark + per-brand) through <code>--astral-*</code> CSS variables and <code>light-dark()</code>.</p>
+
+    <h2 id="install">Install</h2>
+    <pre><code>pnpm add @astralui/core
+<span class="c"># peer deps you likely already have:</span>
+pnpm add react react-dom @tabler/icons-react</code></pre>
+
+    <h2 id="setup">Setup</h2>
+    <p>Import the stylesheet once (entry file), then wrap your app:</p>
+    <pre><code><span class="k">import</span> <span class="s">'@astralui/core/styles.css'</span>;
+<span class="k">import</span> { ColorSchemeProvider, AstralThemeProvider, AstralToaster } <span class="k">from</span> <span class="s">'@astralui/core'</span>;
+
+<span class="k">function</span> Root() {
+  <span class="k">return</span> (
+    &lt;ColorSchemeProvider defaultScheme=<span class="s">"dark"</span>&gt;
+      &lt;AstralThemeProvider&gt;
+        &lt;AstralToaster /&gt;
+        &lt;App /&gt;
+      &lt;/AstralThemeProvider&gt;
+    &lt;/ColorSchemeProvider&gt;
+  );
+}</code></pre>
+
+    <h2 id="color-scheme">Color scheme</h2>
+    <p><code>ColorSchemeProvider</code> persists the scheme and sets <code>data-astral-scheme</code> + <code>color-scheme</code> on <code>&lt;html&gt;</code>. Toggle it anywhere with <code>useColorScheme()</code>.</p>
+    <pre><code><span class="k">const</span> { colorScheme, toggle, setColorScheme } = useColorScheme();</code></pre>
+
+    <h2 id="theming">Per-brand theming</h2>
+    <p>Pass any subset of brand colors; AstralUI builds a 10-shade palette via <code>generateColors()</code> and overrides the tokens per scheme. <code>useThemePreview().setPreview(...)</code> applies a live, unsaved preview.</p>
+    <pre><code>&lt;AstralThemeProvider colors={{
+  primary_color: <span class="s">'#7950f2'</span>,
+  background_color: <span class="s">'#141417'</span>, card_color: <span class="s">'#1c1c20'</span>, font_color: <span class="s">'#f4f4f5'</span>,
+  light_primary_color: <span class="s">'#0f766e'</span>, light_background_color: <span class="s">'#f5f7fa'</span> <span class="c">/* ...light_* */</span>
+}}&gt;</code></pre>
+
+    <h2 id="tokens">Design tokens</h2>
+    <p>Use the variables directly in your own CSS. Core tokens: <code>--astral-color-text</code>, <code>--astral-color-body</code>, <code>--astral-color-dimmed</code>, <code>--astral-color-default-border</code>, the <code>--astral-color-{hue}-{0..9}</code> palette, <code>--astral-primary-color-filled</code>, and <code>--astral-font-family</code>.</p>
+    <pre><code>.thing { background: <span class="k">var</span>(--astral-color-body); color: <span class="k">var</span>(--astral-color-text);
+         border: 1px solid <span class="k">var</span>(--astral-color-default-border); }</code></pre>
+
+    <h2 id="modal">Modal &amp; Drawer</h2>
+    <p>Portalled, centered modal / right-side drawer with escape + click-outside. Props: <code>opened</code>, <code>onClose</code>, <code>title</code>, <code>width?</code>, <code>brand?</code>, <code>zIndex?</code>, <code>children</code>.</p>
+    <pre><code>&lt;AstralModal opened={open} onClose={close} title=<span class="s">"Edit profile"</span> width={460}&gt;
+  ...
+&lt;/AstralModal&gt;
+
+&lt;AstralDrawer opened={open} onClose={close} title=<span class="s">"Filters"</span> width={440}&gt;...&lt;/AstralDrawer&gt;</code></pre>
+
+    <h2 id="confirm">ConfirmModal</h2>
+    <p>Confirmation / alert dialog built on <code>AstralModal</code>. Set <code>danger</code> for a red confirm button and <code>loading</code> while an async action runs.</p>
+    <pre><code>&lt;ConfirmModal opened={open} onClose={close} onConfirm={remove}
+  title=<span class="s">"Delete campaign?"</span> message=<span class="s">"This cannot be undone."</span>
+  confirmLabel=<span class="s">"Delete"</span> danger loading={busy} /&gt;</code></pre>
+
+    <h2 id="select">Select</h2>
+    <p>Single-select combobox (searchable / clearable / creatable), portalled so it floats above modals.</p>
+    <pre><code>&lt;AstralSelect value={v} onChange={setV} searchable clearable
+  options={[{ value: <span class="s">'us'</span>, label: <span class="s">'United States'</span> }]} /&gt;</code></pre>
+
+    <h2 id="menu">Menu</h2>
+    <p>Anchored dropdown from an items array. Items support <code>icon</code>, <code>danger</code>, <code>disabled</code>, and dividers.</p>
+    <pre><code>&lt;AstralMenu items={[
+  { label: <span class="s">'Edit'</span>, onClick: edit },
+  { label: <span class="s">'Delete'</span>, danger: true, onClick: remove },
+]} /&gt;</code></pre>
+
+    <h2 id="pin">PinInput</h2>
+    <p>Code / OTP input with auto-advance, backspace, paste, and arrow keys.</p>
+    <pre><code>&lt;AstralPinInput length={6} value={code} onChange={setCode} /&gt;</code></pre>
+
+    <h2 id="toast">Notifications</h2>
+    <p>Mount <code>&lt;AstralToaster /&gt;</code> once at the root, then call <code>notifications</code> anywhere. A loading toast stays until you <code>update</code> it.</p>
+    <pre><code>notifications.show({ message: <span class="s">'Saved'</span>, color: <span class="s">'green'</span> });
+<span class="k">const</span> id = notifications.show({ message: <span class="s">'Importing...'</span>, loading: true, autoClose: false });
+notifications.update({ id, message: <span class="s">'Done'</span>, color: <span class="s">'green'</span>, loading: false, autoClose: 2000 });</code></pre>
+
+    <h2 id="date">DateInput</h2>
+    <p>Freeze-proof native <code>date</code> / <code>datetime-local</code> input. Commits a parsed <code>Date</code> only on a complete value. Helpers: <code>dateToInputStr</code>, <code>dateTimeToInputStr</code>.</p>
+    <pre><code>&lt;DateInput type=<span class="s">"date"</span> value={date} onChange={setDate} /&gt;</code></pre>
+
+    <h2 id="spinner">Spinner</h2>
+    <pre><code>&lt;Spinner size={20} /&gt;   <span class="c">// or the .au-spinner class</span></code></pre>
+
+    <h2 id="charts">Charts</h2>
+    <p>Dependency-free, prop-driven, theme-aware. Colors accept a hex, a CSS <code>var()</code>, or a palette token like <code>"violet.6"</code>.</p>
+    <pre><code><span class="c">// KPI sparkline + period delta</span>
+&lt;Sparkline points={[3,5,4,8,7,11]} color=<span class="s">"violet.6"</span> /&gt;
+&lt;Delta current={420} previous={377} /&gt;
+
+<span class="c">// interactive, linked-hover charts</span>
+&lt;Donut centerValue=<span class="s">"1,284"</span> centerLabel=<span class="s">"sent"</span> data={[
+  { name: <span class="s">'Accepted'</span>, value: 412, color: <span class="s">'green.6'</span> },
+  { name: <span class="s">'Pending'</span>, value: 872, color: <span class="s">'gray.6'</span> },
+]} /&gt;
+&lt;FunnelBars data={[{ stage: <span class="s">'Sent'</span>, value: 1284, color: <span class="s">'violet.6'</span> }]} /&gt;
+&lt;StackedBars series={[{ label: <span class="s">'A'</span>, color: <span class="s">'violet.6'</span> }]} rows={[{ label: <span class="s">'Mon'</span>, values: [12] }]} /&gt;</code></pre>
+
+    <h2 id="auth">Auth shell</h2>
+    <p><code>AuthShell</code> + <code>AuthCard</code> give a centered sign-in / sign-up / onboarding layout on a cosmic or wash backdrop. Build the form with the <code>au-auth-*</code> classes (<code>au-auth-field</code>, <code>au-auth-input</code>, <code>au-auth-btn</code>, <code>au-auth-note</code>, <code>au-auth-steps</code>).</p>
+    <pre><code>&lt;AuthShell backdrop=<span class="s">"space"</span> topRight={&lt;LangSwitcher /&gt;}&gt;
+  &lt;AuthCard banner={&lt;Logo /&gt;}&gt;
+    &lt;h1 className=<span class="s">"au-auth-title"</span>&gt;Welcome back&lt;/h1&gt;
+    &lt;form className=<span class="s">"au-auth-form"</span>&gt;
+      &lt;div className=<span class="s">"au-auth-field"</span>&gt;
+        &lt;label&gt;Email&lt;/label&gt;
+        &lt;div className=<span class="s">"au-auth-input"</span>&gt;&lt;input /&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button className=<span class="s">"au-auth-btn primary block"</span>&gt;Sign in&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/AuthCard&gt;
+&lt;/AuthShell&gt;</code></pre>
+
+    <h2 id="backgrounds">Backgrounds</h2>
+    <p>Full-bleed decorative backdrops. Wrap content as children; add <code>fixed</code> to pin to the viewport.</p>
+    <pre><code>&lt;SpaceBackground fixed /&gt;        <span class="c">// animated starfield + cosmic glow</span>
+&lt;GridBackground&gt;...&lt;/GridBackground&gt; <span class="c">// brand-tinted, edge-masked technical grid</span></code></pre>
+    <p>Or use the classes directly: <code>.astral-space-bg</code> + <code>.astral-stars</code>, <code>.astral-grid-bg</code>.</p>
+
+    <h2 id="utilities">Utility classes</h2>
+    <p>The package also ships the full primitive layer as classes you can use without a component: buttons (<code>.au-btn</code>, <code>.au-btn.primary/.danger/.ok/.green</code>), inputs (<code>.au-input</code>, <code>.au-textarea</code>, <code>.au-field-label</code>), <code>.au-status</code> pills, <code>.au-tag</code>, <code>.au-badge-ok</code>, <code>.au-alert</code>, <code>.au-table</code>, <code>.au-toggle</code>, <code>.au-card</code>, <code>.au-panel</code>, <code>.au-empty</code>, notification tiles (<code>.au-ntf</code>), and more. See the <a href="./index.html#components" style="color:var(--astral-primary-color-light-color)">live gallery</a>.</p>
+  </main>
+</div>
+</body>
+</html>
