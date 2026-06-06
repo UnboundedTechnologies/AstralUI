@@ -17,7 +17,44 @@
 <style>
   :root { --lp-max: 1120px; }
   html { scroll-behavior: smooth; }
-  body { background: var(--astral-color-body); color: var(--astral-color-text); }
+  body { background: transparent; color: var(--astral-color-text); }
+
+  /* ===== cosmic + grid background (fixed, behind everything) ===== */
+  #lp-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+    background:
+      radial-gradient(120% 75% at 50% -12%, color-mix(in srgb, var(--astral-primary-color-filled) 26%, transparent), transparent 58%),
+      radial-gradient(70% 55% at 84% 8%, color-mix(in srgb, var(--astral-color-blue-6) 20%, transparent), transparent 55%),
+      radial-gradient(60% 60% at 12% 30%, color-mix(in srgb, var(--astral-color-grape-6) 14%, transparent), transparent 55%),
+      var(--astral-color-body);
+  }
+  /* twinkling starfield (two layers for parallax-ish depth) */
+  #lp-bg .lp-stars { position: absolute; inset: -50%; }
+  #lp-bg .lp-stars i { position: absolute; inset: 0; border-radius: 50%; }
+  #lp-bg .s1 { animation: lp-tw 5.5s ease-in-out infinite alternate; }
+  #lp-bg .s2 { animation: lp-tw 8s ease-in-out infinite alternate-reverse; opacity: .6; }
+  @keyframes lp-tw { from { opacity: .35; } to { opacity: .9; } }
+  /* technical grid, faded toward the edges with a radial mask */
+  #lp-bg .lp-grid { position: absolute; inset: 0;
+    --gl: color-mix(in srgb, var(--astral-color-default-border) 55%, transparent);
+    background-image: linear-gradient(var(--gl) 1px, transparent 1px), linear-gradient(90deg, var(--gl) 1px, transparent 1px);
+    background-size: 46px 46px; background-position: center top;
+    -webkit-mask-image: radial-gradient(125% 80% at 50% 0%, #000 28%, transparent 72%);
+            mask-image: radial-gradient(125% 80% at 50% 0%, #000 28%, transparent 72%);
+    opacity: .6; }
+  /* aurora drift glow */
+  #lp-bg::after { content: ""; position: absolute; inset: -30% -10% auto -10%; height: 70vh;
+    background: radial-gradient(50% 100% at 50% 0%, color-mix(in srgb, var(--astral-primary-color-filled) 18%, transparent), transparent 70%);
+    filter: blur(30px); animation: lp-drift 16s ease-in-out infinite alternate; }
+  @keyframes lp-drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+  /* light mode: dial the cosmos way down, keep a faint grid */
+  [data-astral-scheme="light"] #lp-bg { background:
+      radial-gradient(120% 70% at 50% -14%, color-mix(in srgb, var(--astral-primary-color-filled) 12%, transparent), transparent 55%),
+      var(--astral-color-body); }
+  [data-astral-scheme="light"] #lp-bg .lp-stars { display: none; }
+  [data-astral-scheme="light"] #lp-bg .lp-grid { opacity: .5; }
+  @media (prefers-reduced-motion: reduce) {
+    #lp-bg .s1, #lp-bg .s2, #lp-bg::after { animation: none; }
+  }
 
   a { color: inherit; }
   ::selection { background: color-mix(in srgb, var(--astral-primary-color-filled) 35%, transparent); }
@@ -138,6 +175,12 @@
 </style>
 </head>
 <body>
+
+<!-- cosmic + grid backdrop -->
+<div id="lp-bg" aria-hidden="true">
+  <div class="lp-stars"><i class="s1"></i><i class="s2"></i></div>
+  <div class="lp-grid"></div>
+</div>
 
 <nav class="lp-nav">
   <div class="lp-wrap lp-nav-in">
@@ -435,6 +478,20 @@
   }
 
   const root = document.documentElement;
+
+  /* generate the starfield as box-shadow dots on the two twinkle layers */
+  function makeStars(el, count, maxSize, color) {
+    const shadows = [];
+    for (let i = 0; i < count; i++) {
+      const x = (Math.random() * 200).toFixed(2);
+      const y = (Math.random() * 200).toFixed(2);
+      shadows.push(`${x}vw ${y}vh 0 ${(Math.random() * maxSize).toFixed(1)}px ${color}`);
+    }
+    el.style.boxShadow = shadows.join(',');
+    el.style.width = el.style.height = '1px';
+  }
+  makeStars(document.querySelector('.s1'), 90, 1.1, 'rgba(255,255,255,.9)');
+  makeStars(document.querySelector('.s2'), 60, 0.8, 'color-mix(in srgb, var(--astral-color-violet-2) 80%, #fff)');
 
   function applyBrand(hex) {
     const shades = generateColors(hex);     // [0..9]
