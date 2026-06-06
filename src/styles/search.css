@@ -1,0 +1,11 @@
+/* AstralUI search input - leading icon + clearable text field. Render via
+   <SearchInput/>. Width is left to the consumer (set it via style/className). */
+.au-search { position: relative; display: flex; align-items: center; }
+.au-search > svg { position: absolute; left: 13px; width: 15px; height: 15px; color: var(--au-faint); pointer-events: none; }
+.au-search input { width: 100%; font: inherit; font-size: 12.5px; color: var(--au-text); background: var(--au-panel); border: 1px solid var(--au-line); border-radius: 11px; box-shadow: var(--au-shadow); padding: 10px 32px 10px 36px; outline: none; transition: border-color .15s; }
+.au-search input::placeholder { color: var(--au-faint); }
+.au-search input:focus { border-color: color-mix(in srgb, var(--au-brand) 50%, transparent); }
+.au-search input:disabled { opacity: .6; cursor: not-allowed; }
+.au-search .clr { position: absolute; right: 8px; width: 20px; height: 20px; border: 0; background: none; color: var(--au-faint); cursor: pointer; border-radius: 6px; display: grid; place-items: center; }
+.au-search .clr:hover { color: var(--au-text); background: var(--au-line); }
+.au-search .clr svg { width: 13px; height: 13px; }

@@ -101,6 +101,7 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 | `ConfirmModal` | Confirmation dialog (supports a `danger` variant). |
 | `Avatar` | Image avatar with an initials fallback (brand gradient). |
 | `StatusBadge` | Status pill (dot + label), prop-driven color + `filled`. |
+| `SearchInput` | Clearable search field (leading icon + clear button). |
 | `generateColors(hex)` | 10-shade palette from one color. |
 
 ## Token reference

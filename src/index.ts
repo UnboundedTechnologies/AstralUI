@@ -39,3 +39,7 @@ export { Avatar } from './components/Avatar';
 export type { AvatarProps } from './components/Avatar';
 export { StatusBadge } from './components/StatusBadge';
 export type { StatusBadgeProps } from './components/StatusBadge';
+
+// Search input
+export { SearchInput } from './components/SearchInput';
+export type { SearchInputProps } from './components/SearchInput';
