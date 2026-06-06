@@ -13,6 +13,7 @@ dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 - 🌗 **Color scheme** - `ColorSchemeProvider` / `useColorScheme` (persisted, `data-astral-scheme` on `<html>`).
 - 🖌️ **Per-brand theming** - `AstralThemeProvider` generates a brand palette from a single hex and injects per-scheme overrides at runtime (with live preview).
 - 🧩 **Components** - `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`.
+- 🌌 **Backgrounds** - `SpaceBackground` (animated starfield) and `GridBackground` (masked technical grid) for auth screens, heroes, and splash pages.
 
 ## Install
 
@@ -89,6 +90,8 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 | `DateInput` | Freeze-proof native date / datetime-local input. |
 | `Spinner` | Theme-aware loading spinner. |
 | `notifications` + `AstralToaster` | Toast system. |
+| `SpaceBackground` | Animated cosmic backdrop with a twinkling starfield (wrap your content as children). |
+| `GridBackground` | Subtle technical grid with a brand-tinted glow, edge-masked. |
 | `generateColors(hex)` | 10-shade palette from one color. |
 
 ## Token reference

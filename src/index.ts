@@ -19,3 +19,6 @@ export type { ToastOptions } from './components/Toast';
 // Primitives
 export { default as DateInput, dateToInputStr, dateTimeToInputStr } from './components/DateInput';
 export { Spinner } from './components/Spinner';
+
+// Backgrounds
+export { SpaceBackground, GridBackground } from './components/Backgrounds';
