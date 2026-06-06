@@ -12,7 +12,7 @@
 
 <!-- The real, published package stylesheet from the npm CDN. Everything au-* and
      every --astral-* token below is the actual shipped CSS, not a re-creation. -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.6/dist/styles.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.7/dist/styles.css" />
 
 <style>
   :root { --lp-max: 1120px; }
@@ -201,7 +201,7 @@
 
 <header class="lp-hero">
   <div class="lp-wrap">
-    <span class="lp-eyebrow">React design system · v0.1.6</span>
+    <span class="lp-eyebrow">React design system · v0.1.7</span>
     <h1 class="lp-h1">The design system that ships as <span class="accent">one dependency.</span></h1>
     <p class="lp-sub">AstralUI is a self-contained React component library and theme engine. Light and dark out of the box, per-brand theming from a single hex, and no CSS-in-JS runtime - just design tokens, <code>light-dark()</code>, and focused components.</p>
     <div class="lp-cta">
@@ -399,6 +399,15 @@
             <span class="au-sbadge" style="--au-sb:#ef4444"><span class="au-sbadge-dot"></span>Failed</span>
             <span class="au-sbadge" style="--au-sb:#9ca3af"><span class="au-sbadge-dot"></span>Idle</span>
             <span class="au-sbadge" style="--au-sb:#8b5cf6"><span class="au-sbadge-dot"></span>Replied</span>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Search input</h3>
+          <div class="au-search" style="max-width:100%">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input placeholder="Search leads..." aria-label="Search" value="north" />
+            <button type="button" class="clr" aria-label="Clear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
           </div>
         </div>
 

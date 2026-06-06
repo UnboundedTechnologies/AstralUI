@@ -6,7 +6,7 @@
 <title>AstralUI - Documentation</title>
 <meta name="description" content="Live documentation for @astralui/core: install, theming, and every component with runnable examples." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236741d9'/%3E%3Cpath d='M16 6l3 7 7 3-7 3-3 7-3-7-7-3 7-3z' fill='white'/%3E%3C/svg%3E" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.6/dist/styles.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.7/dist/styles.css" />
 <style>
   html { scroll-behavior: smooth; }
   body { background: var(--astral-color-body); color: var(--astral-color-text); }
@@ -57,7 +57,7 @@
 
 <header class="doc-top">
   <a class="b" href="./index.html"><span class="m"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.1L20.5 10l-6.1 2.4L12 18l-2.4-5.6L3.5 10l6.1-1.9z"/></svg></span>AstralUI</a>
-  <span class="ver">v0.1.6 · docs</span>
+  <span class="ver">v0.1.7 · docs</span>
   <span class="sp"></span>
   <a class="lk" href="./index.html">Home</a>
   <a class="lk" href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">npm</a>
@@ -84,6 +84,7 @@
       <a href="#date">DateInput</a>
       <a href="#status">StatusBadge</a>
       <a href="#avatar">Avatar</a>
+      <a href="#search">SearchInput</a>
       <a href="#spinner">Spinner</a>
       <div class="grp">Charts</div>
       <a href="#charts">Sparkline / Delta</a>
@@ -269,6 +270,37 @@ dateTimeToInputStr(date);  <span class="c">// "2026-06-06T14:30"</span></code></
 &lt;Avatar name=<span class="s">"Jane Doe"</span> radius={14} /&gt;  <span class="c">// initials fallback</span></code></pre>
     </div>
 
+    <h2 id="search">SearchInput</h2>
+    <p>A clearable search field. The demo below filters the list live as you type - in real use you'd debounce the value in the parent before querying an API.</p>
+    <div class="ex">
+      <div class="ex-prev" style="flex-direction:column;align-items:stretch;gap:14px">
+        <div class="au-search" style="max-width:320px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="searchBox" placeholder="Search components..." aria-label="Search components" />
+          <button type="button" class="clr" id="searchClr" aria-label="Clear" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <ul id="searchList" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-width:320px">
+          <li class="au-menu-item" style="border-radius:9px">AstralModal</li>
+          <li class="au-menu-item" style="border-radius:9px">AstralSelect</li>
+          <li class="au-menu-item" style="border-radius:9px">ConfirmModal</li>
+          <li class="au-menu-item" style="border-radius:9px">Donut</li>
+          <li class="au-menu-item" style="border-radius:9px">Sparkline</li>
+          <li class="au-menu-item" style="border-radius:9px">StatusBadge</li>
+          <li class="au-menu-item" style="border-radius:9px">Avatar</li>
+          <li class="au-menu-item" style="border-radius:9px">SearchInput</li>
+        </ul>
+        <div id="searchEmpty" style="display:none;color:var(--au-faint);font-size:13px;max-width:320px">No components match.</div>
+      </div>
+      <pre><code><span class="k">const</span> [q, setQ] = useState(<span class="s">''</span>);
+&lt;SearchInput value={q} onChange={setQ} placeholder=<span class="s">"Search components..."</span> /&gt;
+
+<span class="c">// debounce in the parent when querying an API:</span>
+useEffect(() =&gt; {
+  <span class="k">const</span> t = setTimeout(() =&gt; runQuery(q), 300);
+  <span class="k">return</span> () =&gt; clearTimeout(t);
+}, [q]);</code></pre>
+    </div>
+
     <h2 id="spinner">Spinner</h2>
     <div class="ex">
       <div class="ex-prev"><span class="au-spinner"></span><span class="au-spinner" style="width:28px;height:28px"></span></div>
@@ -423,6 +455,15 @@ chartColor(<span class="s">'violet.6'</span>); <span class="c">// "var(--astral-
   function toast({title,msg,kind='ok',accent,lead,autoClose=3200}){const[col,ic]=IC[kind]||IC.ok;const el=document.createElement('div');el.className='au-toast';el.style.setProperty('--au-toast-accent',accent||col);el.innerHTML=`<div class="au-toast-lead">${lead||ic}</div><div class="au-toast-body">${title?`<div class="au-toast-title">${title}</div>`:''}<div class="au-toast-msg">${msg}</div></div><button class="au-toast-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`;el.querySelector('.au-toast-x').addEventListener('click',()=>el.remove());host.appendChild(el);if(autoClose)setTimeout(()=>el.remove(),autoClose);return el;}
   document.getElementById('toastOk').addEventListener('click',()=>toast({title:'Saved',msg:'Your changes are live.',kind:'ok'}));
   document.getElementById('toastLoad').addEventListener('click',()=>{const el=toast({msg:'Importing 2,400 contacts...',accent:'#6741d9',lead:'<span class="au-toast-spin"></span>',autoClose:0});setTimeout(()=>{el.style.setProperty('--au-toast-accent','#16a34a');el.innerHTML=`<div class="au-toast-lead">${IC.ok[1]}</div><div class="au-toast-body"><div class="au-toast-title">Import complete</div><div class="au-toast-msg">2,400 contacts added.</div></div><button class="au-toast-x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`;el.querySelector('.au-toast-x').addEventListener('click',()=>el.remove());setTimeout(()=>el.remove(),2400);},1800);});
+
+  // SearchInput live filter
+  const sb=document.getElementById('searchBox'), sclr=document.getElementById('searchClr'),
+        slist=document.getElementById('searchList'), sempty=document.getElementById('searchEmpty');
+  function runFilter(){ const q=sb.value.trim().toLowerCase(); let shown=0;
+    slist.querySelectorAll('li').forEach(li=>{ const m=li.textContent.toLowerCase().includes(q); li.style.display=m?'':'none'; if(m)shown++; });
+    sclr.style.display=sb.value?'grid':'none'; sempty.style.display=shown?'none':''; }
+  sb.addEventListener('input',runFilter);
+  sclr.addEventListener('click',()=>{ sb.value=''; runFilter(); sb.focus(); });
 
   try{const s=localStorage.getItem('astral-color-scheme');setScheme(s==='light'?'light':'dark');}catch{setScheme('dark');}
 </script>
