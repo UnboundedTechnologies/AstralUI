@@ -12,7 +12,7 @@ dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 - 🎨 **Theme tokens** - a full color palette + semantic tokens as `--astral-*` CSS variables, light & dark.
 - 🌗 **Color scheme** - `ColorSchemeProvider` / `useColorScheme` (persisted, `data-astral-scheme` on `<html>`).
 - 🖌️ **Per-brand theming** - `AstralThemeProvider` generates a brand palette from a single hex and injects per-scheme overrides at runtime (with live preview).
-- 🧩 **Components** - `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`.
+- 🧩 **Components** - `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`, `Collapsible`.
 - 🌌 **Backgrounds** - `SpaceBackground` (animated starfield) and `GridBackground` (masked technical grid) for auth screens, heroes, and splash pages.
 - 📊 **Charts** - dependency-free, prop-driven `Sparkline`, `Delta`, `Donut`, `FunnelBars`, `StackedBars` (pure SVG + CSS, theme-aware).
 - 🔐 **Auth surface** - `AuthShell` / `AuthCard` + `au-auth-*` classes for sign-in / sign-up / verify / onboarding screens.
@@ -104,6 +104,7 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 | `Avatar` | Image avatar with an initials fallback (brand gradient). |
 | `StatusBadge` | Status pill (dot + label), prop-driven color + `filled`. |
 | `SearchInput` | Clearable search field (leading icon + clear button). |
+| `Collapsible` | Folding panel that animates open AND closed (measured max-height + chevron). |
 | `generateColors(hex)` | 10-shade palette from one color. |
 
 ## Token reference

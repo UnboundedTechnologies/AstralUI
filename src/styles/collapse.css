@@ -1,0 +1,17 @@
+/* AstralUI collapsible - a folding panel that animates open AND closed via an
+   exact measured max-height. Render via <Collapsible title="...">...</Collapsible>. */
+.au-collapse { border: 1px solid var(--au-line); border-radius: 14px; background: var(--au-panel); box-shadow: var(--au-shadow); overflow: hidden; }
+.au-collapse-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 12px 15px; font: inherit; font-size: 13px; font-weight: 700; color: var(--au-text); background: none; border: 0; text-align: left; cursor: pointer; }
+.au-collapse-head:hover:not(:disabled) { background: var(--au-surface-2); }
+.au-collapse-head:disabled { opacity: .6; cursor: not-allowed; }
+.au-collapse-title { min-width: 0; }
+.au-collapse--open .au-collapse-head { border-bottom: 1px solid var(--au-line); }
+.au-collapse-chev { flex: 0 0 auto; color: var(--au-dim); transition: transform .2s ease; }
+.au-collapse--open .au-collapse-chev { transform: rotate(180deg); }
+/* The region animates height; the inner fades so content doesn't flash in fully formed. */
+.au-collapse-region { max-height: 0; overflow: hidden; transition: max-height .3s cubic-bezier(.4, 0, .2, 1); }
+.au-collapse-inner { padding: 14px; opacity: 0; transition: opacity .22s ease; }
+.au-collapse--open .au-collapse-inner { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .au-collapse-region, .au-collapse-inner, .au-collapse-chev { transition: none; }
+}

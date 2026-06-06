@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import {
   ColorSchemeProvider, useColorScheme, AstralThemeProvider, useThemePreview,
   AstralModal, ConfirmModal, AstralSelect, AstralMenu, AstralPinInput, AstralToaster,
-  notifications, DateInput, Spinner, SearchInput, StatusBadge, Avatar,
+  notifications, DateInput, Spinner, SearchInput, StatusBadge, Avatar, Collapsible,
   Donut, FunnelBars, StackedBars, Sparkline, Delta,
 } from '../dist/index.js';
 
@@ -116,6 +116,24 @@ function SearchCard() {
   );
 }
 
+function CollapsibleCard() {
+  return (
+    <Card title="Collapsible - animates open & closed">
+      <Collapsible title="Connection funnel">
+        <FunnelBars data={[
+          { stage: 'Connections sent', value: 1284, color: 'violet.6' },
+          { stage: 'Accepted', value: 612, color: 'orange.6' },
+          { stage: 'Replied', value: 233, color: 'green.6' },
+        ]} />
+      </Collapsible>
+      <div style={{ height: 10 }} />
+      <Collapsible title="Open by default" defaultOpen>
+        <div style={{ fontSize: 13, color: 'var(--au-dim)' }}>The region folds away with a measured-height transition, so both expand and collapse ease smoothly.</div>
+      </Collapsible>
+    </Card>
+  );
+}
+
 function ChartsCard() {
   return (
     <Card title="Charts - native linked hover" wide>
@@ -165,6 +183,7 @@ function Playground() {
       <Toolbar />
       <SelectCard /><MenuCard /><ModalCard /><ToastCard />
       <PinCard /><DateCard /><SearchCard /><MiscCard />
+      <CollapsibleCard />
       <ChartsCard />
     </div>
   );

@@ -86,6 +86,7 @@
       <a href="#status">StatusBadge</a>
       <a href="#avatar">Avatar</a>
       <a href="#search">SearchInput</a>
+      <a href="#collapse">Collapsible</a>
       <a href="#spinner">Spinner</a>
       <div class="grp">Charts</div>
       <a href="#charts">Sparkline / Delta</a>
@@ -303,6 +304,37 @@ useEffect(() =&gt; {
 }, [q]);</code></pre>
     </div>
 
+    <h2 id="collapse">Collapsible</h2>
+    <p>A folding panel whose content animates in <em>and</em> out - the region transitions an exact measured <code>max-height</code> (grid <code>0fr/1fr</code> snaps shut on collapse in some browsers) and the chevron rotates. Uncontrolled via <code>defaultOpen</code>, or controlled via <code>open</code> / <code>onOpenChange</code>.</p>
+    <div class="ex">
+      <div class="ex-prev" style="flex-direction:column;align-items:stretch;gap:14px">
+        <div class="au-collapse" id="demoCollapse" style="max-width:420px">
+          <button type="button" class="au-collapse-head" aria-expanded="false" id="demoCollapseBtn">
+            <span class="au-collapse-title">Connection funnel</span>
+            <svg class="au-collapse-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="au-collapse-region" id="demoCollapseRegion">
+            <div class="au-collapse-inner" id="demoCollapseInner">
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:130px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Connections sent</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:100%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-violet-6)">1,284</i></div></div>
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:130px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Accepted</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:48%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-orange-6)">612</i></div></div>
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:130px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Replied</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:18%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-green-6)">233</i></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre><code><span class="k">const</span> [open, setOpen] = useState(<span class="k">false</span>);
+
+<span class="c">// uncontrolled</span>
+&lt;Collapsible title=<span class="s">"Connection funnel"</span>&gt;
+  &lt;FunnelBars data={funnel} /&gt;
+&lt;/Collapsible&gt;
+
+<span class="c">// controlled</span>
+&lt;Collapsible open={open} onOpenChange={setOpen} title=<span class="s">"Details"</span>&gt;…&lt;/Collapsible&gt;</code></pre>
+    </div>
+
     <h2 id="spinner">Spinner</h2>
     <div class="ex">
       <div class="ex-prev"><span class="au-spinner"></span><span class="au-spinner" style="width:28px;height:28px"></span></div>
@@ -480,6 +512,20 @@ chartColor(<span class="s">'violet.6'</span>); <span class="c">// "var(--astral-
     sclr.style.display=sb.value?'grid':'none'; sempty.style.display=shown?'none':''; }
   sb.addEventListener('input',runFilter);
   sclr.addEventListener('click',()=>{ sb.value=''; runFilter(); sb.focus(); });
+
+  // Collapsible: same logic the React component uses - measure the inner height and
+  // animate the region's max-height so open AND close both ease.
+  (function(){
+    const box=document.getElementById('demoCollapse'); if(!box) return;
+    const btn=document.getElementById('demoCollapseBtn'), region=document.getElementById('demoCollapseRegion'),
+          inner=document.getElementById('demoCollapseInner');
+    btn.addEventListener('click',()=>{
+      const open=!box.classList.contains('au-collapse--open');
+      box.classList.toggle('au-collapse--open',open);
+      btn.setAttribute('aria-expanded',String(open));
+      region.style.maxHeight=open?inner.scrollHeight+'px':'0px';
+    });
+  })();
 
   // Charts: native linked-hover (same state logic the React components use - not CSS :hover)
   (function(){

@@ -43,3 +43,7 @@ export type { StatusBadgeProps } from './components/StatusBadge';
 // Search input
 export { SearchInput } from './components/SearchInput';
 export type { SearchInputProps } from './components/SearchInput';
+
+// Collapsible (animated fold/unfold)
+export { Collapsible } from './components/Collapsible';
+export type { CollapsibleProps } from './components/Collapsible';
