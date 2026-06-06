@@ -414,6 +414,26 @@
         </div>
 
         <div class="lp-demo">
+          <h3>Collapsible</h3>
+          <div class="au-collapse" style="width:100%" id="lpCollapse">
+            <button type="button" class="au-collapse-head" aria-expanded="true" onclick="(function(b){var x=b.closest('.au-collapse'),r=x.querySelector('.au-collapse-region'),i=x.querySelector('.au-collapse-inner'),o=!x.classList.contains('au-collapse--open');x.classList.toggle('au-collapse--open',o);b.setAttribute('aria-expanded',o);r.style.maxHeight=o?i.scrollHeight+'px':'0px';})(this)">
+              <span class="au-collapse-title">Connection funnel</span>
+              <svg class="au-collapse-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="au-collapse-region">
+              <div class="au-collapse-inner">
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <div style="display:flex;align-items:center;gap:12px"><span style="width:120px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Connections sent</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:100%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-violet-6)">1,284</i></div></div>
+                  <div style="display:flex;align-items:center;gap:12px"><span style="width:120px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Accepted</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:48%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-orange-6)">612</i></div></div>
+                  <div style="display:flex;align-items:center;gap:12px"><span style="width:120px;flex:0 0 auto;font-size:12px;color:var(--au-dim)">Replied</span><div style="flex:1;height:22px;border-radius:7px;background:var(--au-surface-2);overflow:hidden"><i style="display:flex;align-items:center;height:100%;width:18%;border-radius:7px;padding:0 9px;font-size:11px;font-weight:700;color:#fff;background:var(--astral-color-green-6)">233</i></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>(function(){var x=document.getElementById('lpCollapse');if(!x)return;x.classList.add('au-collapse--open');var r=x.querySelector('.au-collapse-region'),i=x.querySelector('.au-collapse-inner');requestAnimationFrame(function(){r.style.maxHeight=i.scrollHeight+'px';});})();</script>
+        </div>
+
+        <div class="lp-demo">
           <h3>Avatars</h3>
           <div class="lp-row" style="align-items:center">
             <span style="width:42px;height:42px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-weight:700;font-size:16px;background:linear-gradient(135deg,var(--astral-color-violet-6),var(--astral-color-violet-8))">AB</span>
