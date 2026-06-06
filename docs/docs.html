@@ -323,25 +323,39 @@ chartColor(<span class="s">'violet.6'</span>); <span class="c">// "var(--astral-
 
     <h2 id="donut">Donut, Funnel &amp; Stacked bars</h2>
     <div class="ex">
-      <div class="ex-prev" style="gap:30px">
-        <div class="au-donut" style="gap:14px">
-          <div class="au-donut-ring" style="width:120px;height:120px">
-            <svg width="120" height="120" viewBox="0 0 150 150">
-              <circle cx="75" cy="75" r="58" fill="none" stroke="var(--au-surface-2)" stroke-width="18"/>
-              <circle cx="75" cy="75" r="58" fill="none" stroke="var(--astral-color-green-6)" stroke-width="18" stroke-dasharray="116 248" transform="rotate(-90 75 75)"/>
-              <circle cx="75" cy="75" r="58" fill="none" stroke="var(--astral-primary-color-filled)" stroke-width="18" stroke-dasharray="120 244" stroke-dashoffset="-116" transform="rotate(-90 75 75)"/>
-            </svg>
-            <div class="au-donut-ctr"><b>1,284</b><span>sent</span></div>
+      <div class="ex-prev" id="chartDemo" style="gap:30px;flex-direction:column;align-items:stretch">
+        <p style="margin:0 0 2px;font-size:12.5px;color:var(--au-faint)">Hover a slice, bar, or legend item - the highlight is native to the component (linked hover, others dim).</p>
+        <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start">
+          <div class="au-donut" style="gap:14px">
+            <div class="au-donut-ring" style="width:120px;height:120px">
+              <svg width="120" height="120" viewBox="0 0 150 150">
+                <circle cx="75" cy="75" r="58" fill="none" stroke="var(--au-surface-2)" stroke-width="18"/>
+                <circle class="dslice" data-d="0" style="cursor:pointer;transition:opacity .15s,stroke-width .15s" cx="75" cy="75" r="58" fill="none" stroke="var(--astral-color-green-6)" stroke-width="18" stroke-dasharray="116 248" transform="rotate(-90 75 75)"/>
+                <circle class="dslice" data-d="1" style="cursor:pointer;transition:opacity .15s,stroke-width .15s" cx="75" cy="75" r="58" fill="none" stroke="var(--astral-primary-color-filled)" stroke-width="18" stroke-dasharray="120 244" stroke-dashoffset="-116" transform="rotate(-90 75 75)"/>
+              </svg>
+              <div class="au-donut-ctr"><b>1,284</b><span>sent</span></div>
+            </div>
+            <div class="au-donut-legend" style="min-width:120px">
+              <div class="au-dl" data-d="0"><span class="dot" style="background:var(--astral-color-green-6)"></span><b>412</b><span class="dll">Accepted</span></div>
+              <div class="au-dl" data-d="1"><span class="dot" style="background:var(--astral-primary-color-filled)"></span><b>872</b><span class="dll">Pending</span></div>
+            </div>
           </div>
-          <div class="au-donut-legend" style="min-width:120px">
-            <div class="au-dl"><span class="dot" style="background:var(--astral-color-green-6)"></span><b>412</b><span class="dll">Accepted</span></div>
-            <div class="au-dl"><span class="dot" style="background:var(--astral-primary-color-filled)"></span><b>872</b><span class="dll">Pending</span></div>
+          <div class="au-funnel" style="min-width:260px;flex:1">
+            <div class="au-fbar" data-f="0"><span class="au-fbar-label">Sent</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:100%;background:var(--astral-primary-color-filled)"></div></div><span class="au-fbar-val">1,284</span></div>
+            <div class="au-fbar" data-f="1"><span class="au-fbar-label">Accepted</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:62%;background:var(--astral-color-green-6)"></div></div><span class="au-fbar-val">792</span></div>
+            <div class="au-fbar" data-f="2"><span class="au-fbar-label">Replied</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:32%;background:var(--astral-color-blue-6)"></div></div><span class="au-fbar-val">412</span></div>
           </div>
         </div>
-        <div class="au-funnel" style="min-width:260px;flex:1">
-          <div class="au-fbar"><span class="au-fbar-label">Sent</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:100%;background:var(--astral-primary-color-filled)"></div></div><span class="au-fbar-val">1,284</span></div>
-          <div class="au-fbar"><span class="au-fbar-label">Accepted</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:62%;background:var(--astral-color-green-6)"></div></div><span class="au-fbar-val">792</span></div>
-          <div class="au-fbar"><span class="au-fbar-label">Replied</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:32%;background:var(--astral-color-blue-6)"></div></div><span class="au-fbar-val">412</span></div>
+        <div class="au-usage" style="width:100%">
+          <div class="au-usage-legend">
+            <div class="au-ulg" data-s="0"><span class="dot" style="background:var(--astral-primary-color-filled)"></span>Connects</div>
+            <div class="au-ulg" data-s="1"><span class="dot" style="background:var(--astral-color-green-6)"></span>Replies</div>
+          </div>
+          <div class="au-usage-rows">
+            <div class="au-urow" data-row="0"><span class="au-urow-label">Mon</span><div class="au-utrack"><div class="au-useg" data-s="0" style="width:52%;background:var(--astral-primary-color-filled)"></div><div class="au-useg" data-s="1" style="width:23%;background:var(--astral-color-green-6)"></div></div><span class="au-unums"><b data-s="0" style="color:var(--astral-primary-color-filled)">120</b><b data-s="1" style="color:var(--astral-color-green-6)">54</b></span></div>
+            <div class="au-urow" data-row="1"><span class="au-urow-label">Tue</span><div class="au-utrack"><div class="au-useg" data-s="0" style="width:42%;background:var(--astral-primary-color-filled)"></div><div class="au-useg" data-s="1" style="width:17%;background:var(--astral-color-green-6)"></div></div><span class="au-unums"><b data-s="0" style="color:var(--astral-primary-color-filled)">98</b><b data-s="1" style="color:var(--astral-color-green-6)">40</b></span></div>
+            <div class="au-urow" data-row="2"><span class="au-urow-label">Wed</span><div class="au-utrack"><div class="au-useg" data-s="0" style="width:60%;background:var(--astral-primary-color-filled)"></div><div class="au-useg" data-s="1" style="width:31%;background:var(--astral-color-green-6)"></div></div><span class="au-unums"><b data-s="0" style="color:var(--astral-primary-color-filled)">140</b><b data-s="1" style="color:var(--astral-color-green-6)">72</b></span></div>
+          </div>
         </div>
       </div>
       <pre><code>&lt;Donut centerValue=<span class="s">"1,284"</span> centerLabel=<span class="s">"sent"</span> data={[
@@ -464,6 +478,39 @@ chartColor(<span class="s">'violet.6'</span>); <span class="c">// "var(--astral-
     sclr.style.display=sb.value?'grid':'none'; sempty.style.display=shown?'none':''; }
   sb.addEventListener('input',runFilter);
   sclr.addEventListener('click',()=>{ sb.value=''; runFilter(); sb.focus(); });
+
+  // Charts: native linked-hover (same state logic the React components use - not CSS :hover)
+  (function(){
+    const root=document.getElementById('chartDemo'); if(!root) return;
+    // Donut: hover a slice OR legend row -> highlight that index, dim the rest
+    const slices=[...root.querySelectorAll('.dslice')], dls=[...root.querySelectorAll('.au-dl')];
+    function donut(h){
+      slices.forEach(s=>{ const i=+s.dataset.d; s.style.opacity=(h==null||h===i)?'1':'0.28'; s.setAttribute('stroke-width', h===i?'22':'18'); });
+      dls.forEach(r=>{ const i=+r.dataset.d; r.className='au-dl'+(h===i?' on':h!=null?' off':''); });
+    }
+    [...slices,...dls].forEach(el=>{ const i=+el.dataset.d;
+      el.addEventListener('mouseenter',()=>donut(i)); el.addEventListener('mouseleave',()=>donut(null)); });
+    // Funnel: hover a bar -> it's 'on', others 'off'
+    const fbars=[...root.querySelectorAll('.au-fbar')];
+    fbars.forEach(b=>{ const i=+b.dataset.f;
+      b.addEventListener('mouseenter',()=>fbars.forEach(x=>x.className='au-fbar'+(+x.dataset.f===i?' on':' off')));
+      b.addEventListener('mouseleave',()=>fbars.forEach(x=>x.className='au-fbar')); });
+    // Stacked: hover a legend series OR a segment -> highlight across rows, dim the rest
+    const ulg=[...root.querySelectorAll('.au-ulg')], segs=[...root.querySelectorAll('.au-useg')],
+          nums=[...root.querySelectorAll('.au-unums b')], urows=[...root.querySelectorAll('.au-urow')];
+    function stacked(hs, seg){
+      const any=hs!=null||seg!=null, active=(row,s)=> hs!=null? s===hs : seg!=null? (seg.row===row&&seg.s===s) : true;
+      segs.forEach(g=>{ const s=+g.dataset.s, row=+g.closest('.au-urow').dataset.row;
+        g.style.opacity=any&&!active(row,s)?'0.2':'1'; g.style.filter=any&&active(row,s)?'brightness(1.2)':''; });
+      nums.forEach(n=>{ const s=+n.dataset.s, row=+n.closest('.au-urow').dataset.row;
+        n.style.opacity=any&&!active(row,s)?'0.28':'1'; n.style.textShadow=any&&active(row,s)?'0 0 10px '+n.style.color:''; });
+      ulg.forEach(l=>{ const s=+l.dataset.s; l.className='au-ulg'+(hs===s?' on':hs!=null?' off':''); });
+      urows.forEach(r=>{ const row=+r.dataset.row; r.className='au-urow'+(seg&&seg.row===row?' on':''); });
+    }
+    ulg.forEach(l=>{ const s=+l.dataset.s; l.addEventListener('mouseenter',()=>stacked(s,null)); l.addEventListener('mouseleave',()=>stacked(null,null)); });
+    segs.forEach(g=>{ const s=+g.dataset.s, row=+g.closest('.au-urow').dataset.row;
+      g.addEventListener('mouseenter',()=>stacked(null,{row,s})); g.addEventListener('mouseleave',()=>stacked(null,null)); });
+  })();
 
   try{const s=localStorage.getItem('astral-color-scheme');setScheme(s==='light'?'light':'dark');}catch{setScheme('dark');}
 </script>
