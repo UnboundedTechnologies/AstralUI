@@ -1,5 +1,10 @@
 # AstralUI
 
+[![npm version](https://img.shields.io/npm/v/@astralui/core.svg)](https://www.npmjs.com/package/@astralui/core)
+[![CI](https://github.com/UnboundedTechnologies/AstralUI/actions/workflows/ci.yml/badge.svg)](https://github.com/UnboundedTechnologies/AstralUI/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/@astralui/core.svg)](./LICENSE)
+[![types](https://img.shields.io/npm/types/@astralui/core.svg)](https://www.npmjs.com/package/@astralui/core)
+
 A self-contained React design system - theme engine, design tokens, and a set of
 dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 `light-dark()` and small, focused components.
