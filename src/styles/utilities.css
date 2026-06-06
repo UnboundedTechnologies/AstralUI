@@ -15,6 +15,7 @@
   --au-amber: light-dark(#d97706, #fbbf24);
   --au-red: light-dark(#dc2626, #f87171);
   --au-blue: light-dark(#2563eb, #60a5fa);
+  --au-accent: #EF8E2E; /* secondary accent (warm orange), same in both schemes */
   --au-ic: var(--astral-primary-color-filled);
   --au-radius:16px;
   --au-shadow: light-dark(0 1px 2px rgba(16,16,24,.06), 0 1px 2px rgba(0,0,0,.4)),
