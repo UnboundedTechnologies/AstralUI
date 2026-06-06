@@ -18,6 +18,8 @@ dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 - 🔐 **Auth surface** - `AuthShell` / `AuthCard` + `au-auth-*` classes for sign-in / sign-up / verify / onboarding screens.
 - ❓ **ConfirmModal** - a confirmation/alert dialog (with a `danger` variant) built on `AstralModal`.
 
+**[▶ Live playground](https://unboundedtechnologies.github.io/AstralUI/playground.html)** · **[Documentation](https://unboundedtechnologies.github.io/AstralUI/docs.html)** · **[npm](https://www.npmjs.com/package/@astralui/core)**
+
 ## Install
 
 ```bash
