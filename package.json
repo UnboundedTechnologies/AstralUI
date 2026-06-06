@@ -1,7 +1,7 @@
 {
   "name": "@astralui/core",
   "version": "0.1.0",
-  "description": "AstralUI - a self-contained React design system: theme engine (light/dark + per-brand theming), design tokens, and Mantine-free components (Modal, Drawer, Select, Menu, Toast, DateInput, PinInput, Spinner).",
+  "description": "AstralUI - a self-contained, dependency-free React design system: theme engine (light/dark + per-brand theming), design tokens, and components (Modal, Drawer, Select, Menu, Toast, DateInput, PinInput, Spinner).",
   "license": "MIT",
   "author": "Unbounded Technologies",
   "type": "module",

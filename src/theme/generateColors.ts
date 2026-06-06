@@ -1,9 +1,8 @@
 import chroma from 'chroma-js';
 
-/* Inlined from @mantine/colors-generator (MIT) so we carry no @mantine UI deps.
-   Produces a 10-shade Mantine-style palette from a single hex. Byte-identical to
-   the original (same lightness/saturation maps, same chroma-js LCH math). Used by
-   ThemeProvider to turn an org's chosen brand color into a full palette. */
+/* Produces a 10-shade palette from a single hex, using fixed lightness/saturation
+   maps and chroma-js LCH math. Used by AstralThemeProvider to turn an org's chosen
+   brand color into a full palette. */
 
 const LIGHTNESS_MAP = [0.96, 0.907, 0.805, 0.697, 0.605, 0.547, 0.518, 0.445, 0.395, 0.34];
 const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];

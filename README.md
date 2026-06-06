@@ -1,13 +1,13 @@
 # AstralUI
 
-A self-contained React design system — theme engine, design tokens, and a set of
-dependency-free UI components. No Mantine, no CSS-in-JS runtime: just CSS variables +
+A self-contained React design system - theme engine, design tokens, and a set of
+dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 `light-dark()` and small, focused components.
 
-- 🎨 **Theme tokens** — a full color palette + semantic tokens as `--astral-*` CSS variables, light & dark.
-- 🌗 **Color scheme** — `ColorSchemeProvider` / `useColorScheme` (persisted, `data-astral-scheme` on `<html>`).
-- 🖌️ **Per-brand theming** — `AstralThemeProvider` generates a brand palette from a single hex and injects per-scheme overrides at runtime (with live preview).
-- 🧩 **Components** — `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`.
+- 🎨 **Theme tokens** - a full color palette + semantic tokens as `--astral-*` CSS variables, light & dark.
+- 🌗 **Color scheme** - `ColorSchemeProvider` / `useColorScheme` (persisted, `data-astral-scheme` on `<html>`).
+- 🖌️ **Per-brand theming** - `AstralThemeProvider` generates a brand palette from a single hex and injects per-scheme overrides at runtime (with live preview).
+- 🧩 **Components** - `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`.
 
 ## Install
 

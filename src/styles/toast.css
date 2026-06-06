@@ -1,6 +1,5 @@
-/* Astral toast host - Mantine-free replacement for @mantine/notifications.
-   Bottom-right stack, newest at the bottom (nearest the corner), like the old
-   <Notifications position="bottom-right" />. Theme-aware via the --astral-* tokens. */
+/* Astral toast host. Bottom-right stack, newest at the bottom (nearest the
+   corner). Theme-aware via the --astral-* tokens. */
 
 .au-toast-host{
   position: fixed;

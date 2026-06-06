@@ -24,7 +24,7 @@ interface ShellProps {
   children: ReactNode;
 }
 
-/** Centered Astral modal - Mantine-free (portal + overlay + escape + click-outside). */
+/** Centered Astral modal (portal + overlay + escape + click-outside). */
 export function AstralModal({ opened, onClose, title, brand, width = 460, zIndex, children }: ShellProps) {
   useDismiss(opened, onClose);
   if (!opened) return null;
@@ -43,7 +43,7 @@ export function AstralModal({ opened, onClose, title, brand, width = 460, zIndex
   );
 }
 
-/** Right-side Astral drawer - Mantine-free. */
+/** Right-side Astral drawer. */
 export function AstralDrawer({ opened, onClose, title, brand, width = 440, zIndex, children }: ShellProps) {
   useDismiss(opened, onClose);
   if (!opened) return null;
@@ -62,7 +62,7 @@ export function AstralDrawer({ opened, onClose, title, brand, width = 440, zInde
   );
 }
 
-/** Astral 6-box code input - Mantine-free, with auto-advance, backspace, paste and arrows. */
+/** Astral 6-box code input, with auto-advance, backspace, paste and arrows. */
 export function AstralPinInput({ length = 6, value, onChange, autoFocus }: {
   length?: number;
   value: string;
@@ -132,7 +132,7 @@ export function AstralPinInput({ length = 6, value, onChange, autoFocus }: {
 
 export interface AstralSelectOption { value: string; label: string; }
 
-/** Astral select with optional search/create/clear - Mantine-free combobox. */
+/** Astral select with optional search/create/clear - combobox. */
 export function AstralSelect({ value, onChange, options, placeholder, disabled, searchable, searchPlaceholder, noResults, clearable, creatable }: {
   value: string | null;
   onChange: (value: string) => void;
@@ -249,7 +249,7 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
 
 export interface AstralMenuItem { key?: string; label: ReactNode; icon?: ReactNode; onClick?: () => void; danger?: boolean; divider?: boolean; disabled?: boolean; }
 
-/** Astral action-menu dropdown - Mantine-free, portalled like AstralSelect. */
+/** Astral action-menu dropdown - portalled like AstralSelect. */
 export function AstralMenu({ trigger, items, align = 'end', width = 220 }: {
   trigger: ReactNode;
   items: AstralMenuItem[];

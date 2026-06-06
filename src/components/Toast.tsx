@@ -19,7 +19,7 @@ export interface ToastOptions {
   onClose?: () => void;
   /** accepted for API compatibility; the toaster uses one global position */
   position?: string;
-  /** tolerate any other Mantine notification prop a call site may pass (radius, withBorder, style, ...) */
+  /** tolerate any other notification prop a call site may pass (radius, withBorder, style, ...) */
   [key: string]: unknown;
 }
 
