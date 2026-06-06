@@ -44,24 +44,32 @@
 <div class="pg-wrap">
   <h1 class="pg-h1">Live playground</h1>
   <p class="pg-lead">Every component below is the <strong>real</strong> <code>@astralui/core</code> React component, loaded from npm and rendered live - native interactions (hover, focus, open/close) and animations included. Flip the theme or recolor the brand and watch it all respond.</p>
-  <div id="pg-root"></div>
-  <div id="pg-fallback" class="pg-fallback" style="display:none">
-    Couldn't load the live components from the CDN just now. The full component reference (with examples) is on the
-    <a href="./docs.html" style="color:var(--astral-primary-color-light-color)">documentation page</a>.
-  </div>
+  <div id="pg-root"><div class="pg-fallback" id="pg-loading"><span class="au-spinner"></span> &nbsp;Loading the live components from npm…</div></div>
+  <div id="pg-fallback" class="pg-fallback" style="display:none"></div>
 </div>
 
 <script type="module">
-  const fail = (e) => { console.error(e); document.getElementById('pg-fallback').style.display = 'block'; };
+  const fbEl = document.getElementById('pg-fallback');
+  const fail = (e) => {
+    console.error(e);
+    const ld = document.getElementById('pg-loading'); if (ld) ld.remove();
+    fbEl.style.display = 'block';
+    fbEl.innerHTML = 'Couldn\'t render the live components: <code>' + (e && e.message ? e.message : String(e)) +
+      '</code><br><br>The full component reference (with interactive examples) is on the ' +
+      '<a href="./docs.html" style="color:var(--astral-primary-color-light-color)">documentation page</a>.';
+  };
+  window.addEventListener('unhandledrejection', ev => fail(ev.reason));
   try {
-    const [React, ReactDOMClient, htmMod, AU] = await Promise.all([
+    const [ReactNS, ReactDOMClient, htmMod, AU] = await Promise.all([
       import('https://esm.sh/react@19.1.0'),
       import('https://esm.sh/react-dom@19.1.0/client'),
       import('https://esm.sh/htm@3.1.1'),
       import('https://esm.sh/@astralui/core@0.1.7?deps=react@19.1.0,react-dom@19.1.0'),
     ]);
+    const React = ReactNS.default || ReactNS;
     const { useState } = React;
-    const html = htmMod.default.bind(React.createElement);
+    const html = (htmMod.default || htmMod).bind(React.createElement);
+    const loadingEl = document.getElementById('pg-loading'); if (loadingEl) loadingEl.remove();
 
     const SWATCHES = ['#6741d9', '#2563eb', '#0d9488', '#e8590c', '#db2777'];
     const COUNTRIES = ['United States', 'United Kingdom', 'Germany', 'France', 'Japan', 'Brazil'].map(c => ({ value: c, label: c }));
