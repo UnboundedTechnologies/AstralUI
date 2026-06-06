@@ -4,6 +4,14 @@
   "description": "AstralUI - a self-contained, dependency-free React design system: theme engine (light/dark + per-brand theming), design tokens, and components (Modal, Drawer, Select, Menu, Toast, DateInput, PinInput, Spinner).",
   "license": "MIT",
   "author": "Unbounded Technologies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnboundedTechnologies/AstralUI.git"
+  },
+  "homepage": "https://github.com/UnboundedTechnologies/AstralUI#readme",
+  "bugs": {
+    "url": "https://github.com/UnboundedTechnologies/AstralUI/issues"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
