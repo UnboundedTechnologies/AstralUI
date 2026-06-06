@@ -1,6 +1,6 @@
 /* AstralUI charts - lightweight, dependency-free data viz (pure SVG + CSS).
-   Theme-aware via the --astral-*/--au-* tokens. Render through the React
-   components <Sparkline/>, <Delta/>, <Donut/>, <FunnelBars/>, <StackedBars/>. */
+   Theme-aware via the --astral- and --au- design tokens. Render through the React
+   components Sparkline, Delta, Donut, FunnelBars, StackedBars. */
 
 /* ---------- sparkline ---------- */
 .au-spark { margin-top: 10px; height: 28px; width: 100%; display: block; }
