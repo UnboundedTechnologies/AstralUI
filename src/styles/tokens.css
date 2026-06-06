@@ -1,0 +1,130 @@
+/* Default UI font (override --astral-font-family to use your own; or self-host Inter). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ============================================================================
+   AstralUI theme tokens - the --astral-* design variables. Every Astral token
+   (au-*, etc.) resolves through these + light-dark(), which is why `color-scheme`
+   is set per scheme here.
+
+   :root carries the scheme-independent palette + the DARK semantic defaults
+   (AstralUI defaults to dark). The [data-astral-scheme="light"] block overrides
+   only the ~12 vars that differ in light mode. Per-org brand/surface overrides
+   are layered on top at runtime by <AstralThemeProvider>.
+   ============================================================================ */
+
+/* ── Base reset (so AstralUI works standalone, no external reset needed) ── */
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--astral-font-family);
+  font-size: 16px;
+  line-height: 1.55;
+  background: var(--astral-color-body);
+  color: var(--astral-color-text);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+button, input, optgroup, select, textarea { font-family: inherit; font-size: 100%; }
+
+:root {
+  color-scheme: dark;
+
+  --astral-font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  --astral-radius-md: calc(0.5rem * 1);
+
+  --astral-color-black: #000;
+  --astral-color-white: #fff;
+
+  /* palette shades - identical in both schemes */
+  --astral-color-blue-4: #4dabf7;
+  --astral-color-blue-5: #339af0;
+  --astral-color-blue-6: #228be6;
+  --astral-color-blue-7: #1c7ed6;
+  --astral-color-cyan-6: #15aabf;
+  --astral-color-cyan-8: #0c8599;
+  --astral-color-grape-6: #be4bdb;
+  --astral-color-grape-7: #ae3ec9;
+  --astral-color-indigo-6: #4c6ef5;
+  --astral-color-gray-0: #f8f9fa;
+  --astral-color-gray-1: #f1f3f5;
+  --astral-color-gray-2: #e9ecef;
+  --astral-color-gray-3: #dee2e6;
+  --astral-color-gray-4: #ced4da;
+  --astral-color-gray-5: #adb5bd;
+  --astral-color-gray-6: #868e96;
+  --astral-color-gray-7: #495057;
+  --astral-color-green-5: #51cf66;
+  --astral-color-green-6: #40c057;
+  --astral-color-green-7: #37b24d;
+  --astral-color-green-8: #2f9e44;
+  --astral-color-green-9: #2b8a3e;
+  --astral-color-orange-5: #ff922b;
+  --astral-color-orange-6: #fd7e14;
+  --astral-color-orange-7: #f76707;
+  --astral-color-orange-9: #d9480f;
+  --astral-color-red-5: #ff6b6b;
+  --astral-color-red-6: #fa5252;
+  --astral-color-red-7: #f03e3e;
+  --astral-color-red-8: #e03131;
+  --astral-color-teal-5: #20c997;
+  --astral-color-teal-6: #12b886;
+  --astral-color-teal-7: #0ca678;
+  --astral-color-teal-8: #099268;
+  --astral-color-violet-0: #f3f0ff;
+  --astral-color-violet-1: #e5dbff;
+  --astral-color-violet-2: #d0bfff;
+  --astral-color-violet-3: #b197fc;
+  --astral-color-violet-4: #9775fa;
+  --astral-color-violet-5: #845ef7;
+  --astral-color-violet-6: #7950f2;
+  --astral-color-violet-7: #7048e8;
+  --astral-color-violet-8: #6741d9;
+  --astral-color-violet-9: #5f3dc4;
+  --astral-color-yellow-5: #fcc419;
+  --astral-color-yellow-6: #fab005;
+  --astral-color-yellow-7: #f59f00;
+  --astral-color-yellow-8: #f08c00;
+  --astral-color-dark-0: #f4f4f5;
+  --astral-color-dark-1: #d4d4d8;
+  --astral-color-dark-2: #a1a1aa;
+  --astral-color-dark-3: #71717a;
+  --astral-color-dark-4: #3f3f46;
+  --astral-color-dark-5: #27272a;
+  --astral-color-dark-6: #1c1c20;
+  --astral-color-dark-7: #141417;
+  --astral-color-dark-8: #0e0e11;
+  --astral-color-dark-9: #09090b;
+
+  /* semantic / primary - DARK defaults */
+  --astral-color-text: #f4f4f5;
+  --astral-color-body: #141417;
+  --astral-color-dimmed: #a1a1aa;
+  --astral-color-default-border: #3f3f46;
+  --astral-color-default-hover: #27272a;
+  --astral-primary-color-filled: #6741d9;
+  --astral-primary-color-filled-hover: #5f3dc4;
+  --astral-primary-color-light: rgba(121, 80, 242, 0.15);
+  --astral-primary-color-light-hover: rgba(121, 80, 242, 0.2);
+  --astral-primary-color-light-color: #b197fc;
+  --astral-color-yellow-light: rgba(250, 176, 5, 0.15);
+  --astral-color-yellow-light-color: #ffe066;
+}
+
+/* LIGHT overrides - only the vars that differ from the dark defaults above */
+[data-astral-scheme="light"] {
+  color-scheme: light;
+
+  --astral-color-text: #000;
+  --astral-color-body: #fff;
+  --astral-color-dimmed: #868e96;
+  --astral-color-default-border: #ced4da;
+  --astral-color-default-hover: #f8f9fa;
+  --astral-primary-color-filled: #7950f2;
+  --astral-primary-color-filled-hover: #7048e8;
+  --astral-primary-color-light: rgba(121, 80, 242, 0.1);
+  --astral-primary-color-light-hover: rgba(121, 80, 242, 0.12);
+  --astral-primary-color-light-color: #7950f2;
+  --astral-color-yellow-light: rgba(250, 176, 5, 0.1);
+  --astral-color-yellow-light-color: #fab005;
+}

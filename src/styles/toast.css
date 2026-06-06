@@ -1,0 +1,83 @@
+/* Astral toast host - Mantine-free replacement for @mantine/notifications.
+   Bottom-right stack, newest at the bottom (nearest the corner), like the old
+   <Notifications position="bottom-right" />. Theme-aware via the --astral-* tokens. */
+
+.au-toast-host{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10000; /* above AstralModal/AstralMenu portals */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  pointer-events: none;
+  font-family: var(--astral-font-family);
+}
+
+@keyframes au-toast-in{
+  from{ opacity: 0; transform: translateX(16px) scale(.98); }
+  to{ opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.au-toast{
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px 13px;
+  border-radius: 12px;
+  border: 1px solid var(--astral-color-default-border);
+  border-left: 3px solid var(--au-toast-accent, var(--astral-color-default-border));
+  background: light-dark(#ffffff, var(--astral-color-dark-6));
+  box-shadow: light-dark(0 6px 22px rgba(16,16,24,.12), 0 8px 26px rgba(0,0,0,.45));
+  color: var(--astral-color-text);
+  animation: au-toast-in .18s ease;
+}
+
+.au-toast-lead{
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  color: var(--au-toast-accent, var(--astral-color-dimmed));
+  background: color-mix(in srgb, var(--au-toast-accent, var(--astral-color-default-border)) 16%, transparent);
+}
+.au-toast-lead svg{ width: 16px; height: 16px; display: block; }
+
+.au-toast-body{ flex: 1; min-width: 0; padding-top: 1px; }
+.au-toast-title{ font-size: 13px; font-weight: 700; color: var(--astral-color-text); margin-bottom: 2px; line-height: 1.35; }
+.au-toast-msg{ font-size: 12.5px; line-height: 1.45; color: var(--astral-color-dimmed); word-break: break-word; }
+.au-toast-title + .au-toast-msg{ color: var(--astral-color-dimmed); }
+/* when there's no title, the message is the primary line */
+.au-toast-body > .au-toast-msg:only-child{ color: var(--astral-color-text); font-weight: 500; }
+
+.au-toast-x{
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  background: none;
+  border-radius: 6px;
+  color: var(--astral-color-dimmed);
+  cursor: pointer;
+  transition: color .12s, background .12s;
+}
+.au-toast-x:hover{ color: var(--astral-color-text); background: var(--astral-color-default-hover); }
+.au-toast-x svg{ width: 14px; height: 14px; display: block; }
+
+@keyframes au-toast-spin{ to{ transform: rotate(360deg); } }
+.au-toast-spin{
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  animation: au-toast-spin .6s linear infinite;
+  display: block;
+}
