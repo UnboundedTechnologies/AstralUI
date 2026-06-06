@@ -33,3 +33,9 @@ export { AuthShell, AuthCard } from './components/Auth';
 // Confirmation dialog
 export { ConfirmModal } from './components/ConfirmModal';
 export type { ConfirmModalProps } from './components/ConfirmModal';
+
+// Avatar + status badge
+export { Avatar } from './components/Avatar';
+export type { AvatarProps } from './components/Avatar';
+export { StatusBadge } from './components/StatusBadge';
+export type { StatusBadgeProps } from './components/StatusBadge';

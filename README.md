@@ -99,6 +99,8 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 | `Donut` / `FunnelBars` / `StackedBars` | Interactive, linked-hover charts (pure SVG + CSS). |
 | `AuthShell` / `AuthCard` | Centered auth/onboarding layout on a cosmic or wash backdrop. |
 | `ConfirmModal` | Confirmation dialog (supports a `danger` variant). |
+| `Avatar` | Image avatar with an initials fallback (brand gradient). |
+| `StatusBadge` | Status pill (dot + label), prop-driven color + `filled`. |
 | `generateColors(hex)` | 10-shade palette from one color. |
 
 ## Token reference

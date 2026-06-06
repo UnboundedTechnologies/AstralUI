@@ -1,0 +1,6 @@
+/* AstralUI status badge - colored dot + label. Color comes from the inline
+   --au-sb custom property set by <StatusBadge/>. */
+.au-sbadge { display: inline-flex; align-items: center; gap: 5px; font-family: var(--astral-font-family); font-size: 11px; font-weight: 600; line-height: 1; padding: 4px 8px; border-radius: 7px; white-space: nowrap; color: var(--au-sb); background: color-mix(in srgb, var(--au-sb) 15%, transparent); }
+.au-sbadge .au-sbadge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--au-sb); flex: 0 0 auto; }
+.au-sbadge.filled { color: #fff; background: var(--au-sb); }
+.au-sbadge.filled .au-sbadge-dot { background: #fff; }

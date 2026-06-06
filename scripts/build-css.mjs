@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 // Order matters: design tokens first, then the utility/component classes that consume them.
-const files = ['src/styles/tokens.css', 'src/styles/utilities.css', 'src/styles/toast.css', 'src/styles/backgrounds.css', 'src/styles/charts.css', 'src/styles/auth.css'];
+const files = ['src/styles/tokens.css', 'src/styles/utilities.css', 'src/styles/toast.css', 'src/styles/backgrounds.css', 'src/styles/charts.css', 'src/styles/auth.css', 'src/styles/badge.css'];
 
 const imports = [];
 const bodies = files.map((rel) => {
