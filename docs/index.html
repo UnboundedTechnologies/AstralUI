@@ -12,7 +12,7 @@
 
 <!-- The real, published package stylesheet from the npm CDN. Everything au-* and
      every --astral-* token below is the actual shipped CSS, not a re-creation. -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.3/dist/styles.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@astralui/core@0.1.4/dist/styles.css" />
 
 <style>
   :root { --lp-max: 1120px; }
@@ -191,9 +191,9 @@
     <div class="lp-nav-links">
       <a href="#components" class="hide-sm">Components</a>
       <a href="#theming" class="hide-sm">Theming</a>
-      <a href="./docs.html">Docs</a>
-      <a href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">npm</a>
-      <a href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener" class="hide-sm">npm</a>
+      <a href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener" class="hide-sm">GitHub</a>
+      <a href="./docs.html" class="au-btn primary sm" style="color:#fff;text-decoration:none">Documentation</a>
       <button class="lp-themebtn" id="themeBtn" aria-label="Toggle color scheme" title="Toggle light / dark"></button>
     </div>
   </div>
@@ -211,7 +211,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
         </button>
       </div>
-      <a class="au-btn primary" href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">View on npm</a>
+      <a class="au-btn primary" href="./docs.html">Read the docs</a>
+      <a class="au-btn" href="https://www.npmjs.com/package/@astralui/core" target="_blank" rel="noopener">View on npm</a>
       <a class="au-btn" href="https://github.com/UnboundedTechnologies/AstralUI" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.93.68 1.88v2.79c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
         Star on GitHub
@@ -234,6 +235,7 @@
         <div class="lp-play-group">
           <span class="lp-play-label">Try it</span>
           <button class="au-btn primary sm" id="openModal">Open modal</button>
+          <button class="au-btn danger sm" id="openConfirm">Confirm dialog</button>
           <button class="au-btn sm" id="toastOk">Success toast</button>
           <button class="au-btn sm" id="toastLoad">Loading toast</button>
         </div>
@@ -389,6 +391,67 @@
           </div>
         </div>
 
+        <div class="lp-demo">
+          <h3>Status badges</h3>
+          <div class="lp-row">
+            <span class="au-sbadge filled" style="--au-sb:#16a34a"><span class="au-sbadge-dot"></span>Running</span>
+            <span class="au-sbadge" style="--au-sb:#eab308"><span class="au-sbadge-dot"></span>Paused</span>
+            <span class="au-sbadge" style="--au-sb:#ef4444"><span class="au-sbadge-dot"></span>Failed</span>
+            <span class="au-sbadge" style="--au-sb:#9ca3af"><span class="au-sbadge-dot"></span>Idle</span>
+            <span class="au-sbadge" style="--au-sb:#8b5cf6"><span class="au-sbadge-dot"></span>Replied</span>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Avatars</h3>
+          <div class="lp-row" style="align-items:center">
+            <span style="width:42px;height:42px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-weight:700;font-size:16px;background:linear-gradient(135deg,var(--astral-color-violet-6),var(--astral-color-violet-8))">AB</span>
+            <span style="width:42px;height:42px;border-radius:13px;display:inline-grid;place-items:center;color:#fff;font-weight:700;font-size:16px;background:linear-gradient(135deg,var(--astral-color-violet-6),var(--astral-color-violet-8))">JD</span>
+            <img src="https://i.pravatar.cc/84?img=5" width="42" height="42" alt="" style="border-radius:50%;object-fit:cover;display:block" />
+            <img src="https://i.pravatar.cc/84?img=32" width="42" height="42" alt="" style="border-radius:50%;object-fit:cover;display:block" />
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Charts</h3>
+          <div class="lp-row" style="gap:22px;align-items:center">
+            <div class="au-donut-ring" style="width:104px;height:104px">
+              <svg width="104" height="104" viewBox="0 0 150 150">
+                <circle cx="75" cy="75" r="58" fill="none" stroke="var(--au-surface-2)" stroke-width="18"/>
+                <circle cx="75" cy="75" r="58" fill="none" stroke="var(--astral-color-green-6)" stroke-width="18" stroke-dasharray="116 248" transform="rotate(-90 75 75)"/>
+                <circle cx="75" cy="75" r="58" fill="none" stroke="var(--astral-primary-color-filled)" stroke-width="18" stroke-dasharray="120 244" stroke-dashoffset="-116" transform="rotate(-90 75 75)"/>
+              </svg>
+              <div class="au-donut-ctr"><b style="font-size:18px">68%</b><span>rate</span></div>
+            </div>
+            <svg class="au-spark" viewBox="0 0 100 28" preserveAspectRatio="none" style="flex:1;min-width:120px"><path d="M0,24 L20,15 L40,18 L60,6 L80,10 L100,2" fill="none" stroke="var(--astral-primary-color-filled)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Funnel bars</h3>
+          <div class="au-funnel">
+            <div class="au-fbar"><span class="au-fbar-label">Sent</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:100%;background:var(--astral-primary-color-filled)"></div></div><span class="au-fbar-val">1,284</span></div>
+            <div class="au-fbar"><span class="au-fbar-label">Accepted</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:62%;background:var(--astral-color-green-6)"></div></div><span class="au-fbar-val">792</span></div>
+            <div class="au-fbar"><span class="au-fbar-label">Replied</span><div class="au-fbar-track"><div class="au-fbar-fill" style="width:32%;background:var(--astral-color-blue-6)"></div></div><span class="au-fbar-val">412</span></div>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Backgrounds</h3>
+          <div class="lp-row" style="gap:10px">
+            <div class="astral-space-bg" style="position:relative;flex:1;min-width:120px;height:96px;border-radius:10px;overflow:hidden"><div class="astral-stars"></div></div>
+            <div class="astral-grid-bg" style="position:relative;flex:1;min-width:120px;height:96px;border-radius:10px;overflow:hidden;border:1px solid var(--au-line)"></div>
+          </div>
+        </div>
+
+        <div class="lp-demo">
+          <h3>Auth card</h3>
+          <div class="au-auth-form" style="margin-top:0">
+            <div class="au-auth-field"><label>Email</label><div class="au-auth-input"><input type="text" placeholder="you@company.com" /></div></div>
+            <button class="au-auth-btn primary block">Sign in</button>
+          </div>
+        </div>
+
         <div class="lp-demo" style="grid-column:1 / -1;">
           <h3>Table</h3>
           <div class="au-tablewrap">
@@ -452,6 +515,25 @@
         <div class="clay-actions">
           <button class="au-btn" id="modalCancel">Cancel</button>
           <button class="au-btn primary" id="modalSave">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- demo confirm dialog (matches ConfirmModal markup) -->
+<div class="au-modal-overlay" id="confirm" style="display:none;">
+  <div class="au-modal-panel" style="max-width:420px;">
+    <div class="au-modal-head">
+      <span class="au-modal-title">Delete campaign?</span>
+      <button class="au-modal-x" id="confirmX" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="au-modal-body">
+      <div class="clay-form">
+        <div style="font-size:13px;line-height:1.55;color:var(--au-dim)">This permanently removes the campaign and its schedule. This cannot be undone.</div>
+        <div class="clay-actions">
+          <button class="au-btn" id="confirmCancel">Cancel</button>
+          <button class="au-btn solidred" id="confirmGo">Delete</button>
         </div>
       </div>
     </div>
@@ -550,7 +632,18 @@
   document.getElementById('modalCancel').addEventListener('click', closeM);
   document.getElementById('modalSave').addEventListener('click', () => { closeM(); toast({ title: 'Campaign created', msg: 'Q4 expansion is ready.', kind: 'ok' }); });
   modal.addEventListener('mousedown', e => { if (e.target === modal) closeM(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
+
+  /* confirm dialog */
+  const confirmEl = document.getElementById('confirm');
+  const openC = () => confirmEl.style.display = 'grid';
+  const closeC = () => confirmEl.style.display = 'none';
+  document.getElementById('openConfirm').addEventListener('click', openC);
+  document.getElementById('confirmX').addEventListener('click', closeC);
+  document.getElementById('confirmCancel').addEventListener('click', closeC);
+  document.getElementById('confirmGo').addEventListener('click', () => { closeC(); toast({ title: 'Campaign deleted', msg: 'It has been removed.', kind: 'err' }); });
+  confirmEl.addEventListener('mousedown', e => { if (e.target === confirmEl) closeC(); });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeM(); closeC(); } });
 
   /* toasts (matches AstralToaster DOM) */
   const host = document.getElementById('toastHost');
