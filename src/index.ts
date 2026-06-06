@@ -22,3 +22,14 @@ export { Spinner } from './components/Spinner';
 
 // Backgrounds
 export { SpaceBackground, GridBackground } from './components/Backgrounds';
+
+// Charts (dependency-free, prop-driven)
+export { Sparkline, Delta, Donut, FunnelBars, StackedBars, chartColor } from './components/Charts';
+export type { DonutDatum, FunnelDatum, StackedRow, StackedSeries } from './components/Charts';
+
+// Auth surface (sign-in / sign-up / verify / onboarding)
+export { AuthShell, AuthCard } from './components/Auth';
+
+// Confirmation dialog
+export { ConfirmModal } from './components/ConfirmModal';
+export type { ConfirmModalProps } from './components/ConfirmModal';

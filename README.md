@@ -14,6 +14,9 @@ dependency-free UI components. No CSS-in-JS runtime: just CSS variables +
 - 🖌️ **Per-brand theming** - `AstralThemeProvider` generates a brand palette from a single hex and injects per-scheme overrides at runtime (with live preview).
 - 🧩 **Components** - `AstralModal`, `AstralDrawer`, `AstralSelect`, `AstralMenu`, `AstralPinInput`, `AstralToaster` + `notifications`, `DateInput`, `Spinner`.
 - 🌌 **Backgrounds** - `SpaceBackground` (animated starfield) and `GridBackground` (masked technical grid) for auth screens, heroes, and splash pages.
+- 📊 **Charts** - dependency-free, prop-driven `Sparkline`, `Delta`, `Donut`, `FunnelBars`, `StackedBars` (pure SVG + CSS, theme-aware).
+- 🔐 **Auth surface** - `AuthShell` / `AuthCard` + `au-auth-*` classes for sign-in / sign-up / verify / onboarding screens.
+- ❓ **ConfirmModal** - a confirmation/alert dialog (with a `danger` variant) built on `AstralModal`.
 
 ## Install
 
@@ -92,6 +95,10 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 | `notifications` + `AstralToaster` | Toast system. |
 | `SpaceBackground` | Animated cosmic backdrop with a twinkling starfield (wrap your content as children). |
 | `GridBackground` | Subtle technical grid with a brand-tinted glow, edge-masked. |
+| `Sparkline` / `Delta` | Inline KPI sparkline; period-over-period delta badge. |
+| `Donut` / `FunnelBars` / `StackedBars` | Interactive, linked-hover charts (pure SVG + CSS). |
+| `AuthShell` / `AuthCard` | Centered auth/onboarding layout on a cosmic or wash backdrop. |
+| `ConfirmModal` | Confirmation dialog (supports a `danger` variant). |
 | `generateColors(hex)` | 10-shade palette from one color. |
 
 ## Token reference

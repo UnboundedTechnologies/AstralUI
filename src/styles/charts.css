@@ -1,0 +1,53 @@
+/* AstralUI charts - lightweight, dependency-free data viz (pure SVG + CSS).
+   Theme-aware via the --astral-*/--au-* tokens. Render through the React
+   components <Sparkline/>, <Delta/>, <Donut/>, <FunnelBars/>, <StackedBars/>. */
+
+/* ---------- sparkline ---------- */
+.au-spark { margin-top: 10px; height: 28px; width: 100%; display: block; }
+
+/* ---------- delta badge ---------- */
+.au-delta { font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.au-delta.up { color: var(--au-green); background: color-mix(in srgb, var(--au-green) 14%, transparent); }
+.au-delta.down { color: var(--au-red); background: color-mix(in srgb, var(--au-red) 14%, transparent); }
+
+/* ---------- donut ---------- */
+.au-donut { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.au-donut-ring { position: relative; width: 150px; height: 150px; flex: 0 0 auto; }
+.au-donut-ctr { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+.au-donut-ctr b { font-size: 26px; font-weight: 760; letter-spacing: -.02em; color: var(--au-text); line-height: 1; }
+.au-donut-ctr span { font-size: 11px; color: var(--au-dim); margin-top: 3px; }
+.au-donut-legend { display: flex; flex-direction: column; gap: 7px; min-width: 170px; flex: 1; }
+.au-dl { display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 8px; cursor: default; transition: background .12s, opacity .15s; }
+.au-dl.on { background: var(--au-surface-2); }
+.au-dl.off { opacity: .4; }
+.au-dl .dot { width: 9px; height: 9px; border-radius: 3px; flex: 0 0 auto; }
+.au-dl .dll { font-size: 12.5px; color: var(--au-dim); flex: 1; min-width: 0; }
+.au-dl.on .dll { color: var(--au-text); }
+.au-dl b { font-size: 14px; font-weight: 730; color: var(--au-text); min-width: 30px; font-variant-numeric: tabular-nums; }
+
+/* ---------- funnel bars ---------- */
+.au-funnel { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; justify-content: space-around; gap: 8px; padding: 6px 0 2px; }
+.au-fbar { display: grid; grid-template-columns: 86px 1fr 46px; align-items: center; gap: 14px; transition: opacity .15s; }
+.au-fbar.off { opacity: .36; }
+.au-fbar-label { font-size: 12px; color: var(--au-dim); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.au-fbar.on .au-fbar-label { color: var(--au-text); font-weight: 600; }
+.au-fbar-track { height: 20px; border-radius: 7px; background: var(--au-surface-2); overflow: hidden; }
+.au-fbar-fill { height: 100%; border-radius: 7px; min-width: 3px; transition: width .45s cubic-bezier(.4,0,.2,1), filter .15s; }
+.au-fbar.on .au-fbar-fill { filter: brightness(1.18) saturate(1.08); }
+.au-fbar-val { font-size: 14px; font-weight: 730; color: var(--au-text); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* ---------- stacked bars ---------- */
+.au-usage { display: flex; flex-direction: column; gap: 14px; }
+.au-usage-legend { display: flex; gap: 16px; justify-content: flex-end; flex-wrap: wrap; }
+.au-ulg { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--au-dim); cursor: default; transition: opacity .15s, color .15s; }
+.au-ulg.on { color: var(--au-text); }
+.au-ulg.off { opacity: .4; }
+.au-ulg .dot { width: 9px; height: 9px; border-radius: 3px; flex: 0 0 auto; }
+.au-usage-rows { display: flex; flex-direction: column; gap: 10px; }
+.au-urow { display: grid; grid-template-columns: 104px 1fr auto; align-items: center; gap: 14px; }
+.au-urow-label { font-size: 12px; color: var(--au-dim); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .15s; }
+.au-urow.on .au-urow-label { color: var(--au-text); font-weight: 600; }
+.au-utrack { display: flex; align-items: stretch; height: 22px; border-radius: 7px; background: var(--au-surface-2); overflow: hidden; }
+.au-useg { height: 100%; flex: 0 0 auto; cursor: pointer; transition: opacity .15s, filter .15s; }
+.au-unums { display: inline-flex; gap: 12px; font-variant-numeric: tabular-nums; min-width: 64px; justify-content: flex-end; }
+.au-unums b { font-size: 13.5px; font-weight: 740; transition: opacity .15s, text-shadow .15s; }

@@ -1,0 +1,170 @@
+/* AstralUI auth surface - sign-in / sign-up / verify / onboarding layouts.
+   A centered card on a branded backdrop, with stepper, fields, notices, and a
+   logo dropzone. Theme-aware via the --astral-* tokens. Pair with <AuthShell/>
+   (or the .astral-space-bg / .astral-grid-bg backgrounds). */
+
+.au-auth {
+  --aa-panel: var(--astral-app-card, light-dark(#ffffff, #16161b));
+  --aa-surface-2: light-dark(var(--astral-color-gray-1), #1d1d24);
+  --aa-line: var(--astral-color-default-border);
+  --aa-text: var(--astral-color-text);
+  --aa-dim: light-dark(var(--astral-color-gray-7), #a6a6b3);
+  --aa-faint: light-dark(var(--astral-color-gray-6), #6f6f7d);
+  --aa-brand: var(--astral-primary-color-filled);
+  --aa-brand-text: light-dark(var(--astral-color-violet-7), var(--astral-color-violet-3));
+  --aa-brand-2: var(--astral-color-violet-5);
+  --aa-accent: #EF8E2E;
+  --aa-green: light-dark(#059669, #34d399);
+  --aa-red: light-dark(#dc2626, #f87171);
+  --aa-shadow: light-dark(0 1px 2px rgba(16,16,24,.06), 0 1px 2px rgba(0,0,0,.4)),
+               light-dark(0 8px 22px rgba(16,16,24,.06), 0 8px 24px rgba(0,0,0,.22));
+  font-family: var(--astral-font-family);
+
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 40px 22px;
+  overflow: hidden;
+  background: var(--astral-color-body);
+  color: var(--aa-text);
+}
+.au-auth .num { font-variant-numeric: tabular-nums; }
+
+/* branded backdrop: soft radial wash + faint masked grid */
+.au-auth-bg { position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(58% 46% at 50% -4%, color-mix(in srgb, var(--aa-brand) 16%, transparent), transparent 70%),
+    radial-gradient(40% 38% at 86% 108%, color-mix(in srgb, var(--aa-accent) 10%, transparent), transparent 72%); }
+.au-auth-bg::after { content: ""; position: absolute; inset: 0; opacity: .5;
+  background-image: linear-gradient(var(--aa-line) 1px, transparent 1px), linear-gradient(90deg, var(--aa-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 30%, #000, transparent 75%);
+          mask-image: radial-gradient(70% 60% at 50% 30%, #000, transparent 75%); }
+
+.au-auth-lang { position: absolute; top: 16px; right: 16px; z-index: 5; }
+.au-auth-back { position: absolute; top: 16px; left: 16px; z-index: 5; display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--aa-dim); background: var(--aa-panel);
+  border: 1px solid var(--aa-line); border-radius: 10px; padding: 8px 13px; cursor: pointer; transition: .15s; }
+.au-auth-back:hover { color: var(--aa-text); border-color: color-mix(in srgb, var(--aa-brand) 45%, transparent); }
+
+/* card */
+.au-auth-card { position: relative; z-index: 2; width: 100%; max-width: 452px;
+  background: var(--aa-panel); border: 1px solid var(--aa-line); border-radius: 20px;
+  box-shadow: var(--aa-shadow); padding: 30px 30px 26px; overflow: hidden; }
+
+/* brand banner header */
+.au-auth-banner { position: relative; display: flex; align-items: center; justify-content: center;
+  padding: 19px 0 17px; margin: -30px -30px 24px; border-bottom: 1px solid var(--aa-line);
+  background: linear-gradient(180deg, #f5f3fc, #ece8f8); }
+.au-auth-banner::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--aa-accent), var(--aa-brand) 55%, var(--aa-brand-2)); }
+.au-auth-banner img { height: 25px; width: auto; display: block; }
+
+.au-auth-title { margin: 0; font-size: 23px; font-weight: 700; letter-spacing: -.02em; color: var(--aa-text); }
+.au-auth-sub { margin-top: 6px; font-size: 12.8px; color: var(--aa-dim); line-height: 1.5; }
+
+/* error */
+.au-auth-err { display: flex; align-items: flex-start; gap: 9px; margin: 16px 0 0; padding: 10px 13px; border-radius: 11px; font-size: 12.5px; line-height: 1.45;
+  color: var(--aa-red); background: color-mix(in srgb, var(--aa-red) 12%, transparent); border: 1px solid color-mix(in srgb, var(--aa-red) 30%, transparent); }
+.au-auth-err svg { flex: 0 0 auto; margin-top: 1px; }
+
+/* stepper */
+.au-auth-steps { display: flex; align-items: center; margin: 24px 0 22px; }
+.au-auth-step { display: flex; align-items: center; gap: 8px; }
+.au-auth-step-dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; flex: 0 0 auto;
+  background: var(--aa-surface-2); border: 1px solid var(--aa-line); color: var(--aa-faint); transition: .15s; }
+.au-auth-step-dot svg { width: 13px; height: 13px; }
+.au-auth-step-l { font-size: 12px; font-weight: 600; color: var(--aa-faint); white-space: nowrap; }
+.au-auth-step.on .au-auth-step-dot { background: var(--aa-brand); border-color: var(--aa-brand); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--aa-brand) 22%, transparent); }
+.au-auth-step.on .au-auth-step-l { color: var(--aa-text); }
+.au-auth-step.done .au-auth-step-dot { background: color-mix(in srgb, var(--aa-brand) 18%, transparent); border-color: color-mix(in srgb, var(--aa-brand) 45%, transparent); color: var(--aa-brand-text); }
+.au-auth-step.done .au-auth-step-l { color: var(--aa-dim); }
+.au-auth-step-line { flex: 1; height: 2px; margin: 0 10px; border-radius: 2px; background: var(--aa-line); }
+.au-auth-step-line.fill { background: color-mix(in srgb, var(--aa-brand) 50%, transparent); }
+
+/* field */
+.au-auth-field { margin-bottom: 18px; }
+.au-auth-field label { display: block; font-size: 12px; font-weight: 600; color: var(--aa-dim); margin-bottom: 7px; }
+.au-auth-input { display: flex; align-items: center; gap: 9px; background: var(--aa-surface-2); border: 1px solid var(--aa-line); border-radius: 11px; padding: 11px 13px; transition: .15s; }
+.au-auth-input:focus-within { border-color: var(--aa-brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--aa-brand) 18%, transparent); }
+.au-auth-input input { flex: 1; border: 0; background: transparent; color: var(--aa-text); font: inherit; font-size: 13.5px; outline: none; }
+.au-auth-input input::placeholder { color: var(--aa-faint); }
+.au-auth-hint { margin-top: 7px; font-size: 11.5px; color: var(--aa-faint); }
+
+/* logo dropzone */
+.au-auth-drop { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; border: 1.5px dashed var(--aa-line); border-radius: 14px; padding: 24px 18px; background: var(--aa-surface-2); transition: .15s; cursor: pointer; }
+.au-auth-drop:hover { border-color: color-mix(in srgb, var(--aa-brand) 55%, transparent); background: color-mix(in srgb, var(--aa-brand) 6%, var(--aa-surface-2)); }
+.au-auth-drop .ph { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, var(--aa-brand) 14%, transparent); color: var(--aa-brand-text); overflow: hidden; }
+.au-auth-drop .ph svg { width: 24px; height: 24px; }
+.au-auth-drop .ph img { width: 100%; height: 100%; object-fit: cover; }
+.au-auth-drop .t { font-size: 13px; font-weight: 600; color: var(--aa-text); }
+.au-auth-drop .t b { color: var(--aa-brand-text); font-weight: 700; }
+.au-auth-drop .h { font-size: 11.5px; color: var(--aa-faint); }
+.au-auth-drop-clear { margin-top: 9px; font-size: 12px; font-weight: 600; color: var(--aa-faint); background: transparent; border: 0; cursor: pointer; }
+.au-auth-drop-clear:hover { color: var(--aa-red); }
+
+/* success */
+.au-auth-ok { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 6px 0 2px; }
+.au-auth-okring { width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 16px; color: var(--aa-green);
+  background: color-mix(in srgb, var(--aa-green) 15%, transparent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--aa-green) 8%, transparent); }
+.au-auth-okring svg { width: 30px; height: 30px; }
+
+/* join icon */
+.au-auth-jicon { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 16px; color: var(--aa-brand-text); background: color-mix(in srgb, var(--aa-brand) 14%, transparent); }
+.au-auth-jicon svg { width: 22px; height: 22px; }
+
+/* actions */
+.au-auth-actions { display: flex; align-items: center; gap: 10px; margin-top: 24px; }
+.au-auth-actions.center { justify-content: center; }
+.au-auth-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: inherit; font-size: 13px; font-weight: 650; border-radius: 11px; padding: 11px 18px; cursor: pointer; transition: .15s; border: 1px solid var(--aa-line); background: transparent; color: var(--aa-text); }
+.au-auth-btn.ghost { color: var(--aa-dim); }
+.au-auth-btn.ghost:hover { color: var(--aa-text); border-color: color-mix(in srgb, var(--aa-brand) 45%, transparent); }
+.au-auth-btn.primary { background: var(--aa-brand); border-color: var(--aa-brand); color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--aa-brand) 32%, transparent); }
+.au-auth-btn.primary:hover { filter: brightness(1.08); }
+.au-auth-btn.primary:active { transform: translateY(1px); }
+.au-auth-btn:disabled { opacity: .5; cursor: not-allowed; }
+.au-auth-btn.full, .au-auth-btn.block { flex: 1; width: 100%; }
+.au-auth-btn svg { width: 15px; height: 15px; }
+
+.au-auth-alt { margin-top: 16px; text-align: center; font-size: 12px; color: var(--aa-faint); }
+.au-auth-alt button, .au-auth-alt a { color: var(--aa-brand-text); font: inherit; font-weight: 600; background: transparent; border: 0; cursor: pointer; padding: 0; text-decoration: none; }
+.au-auth-alt button:hover, .au-auth-alt a:hover { text-decoration: underline; }
+
+/* stacked form */
+.au-auth-form { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.au-auth-form .au-auth-field { margin-bottom: 0; }
+
+/* notices (info / warn / ok / err) */
+.au-auth-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 16px; padding: 10px 13px; border-radius: 11px; font-size: 12.5px; line-height: 1.45; }
+.au-auth-note svg { flex: 0 0 auto; margin-top: 1px; }
+.au-auth-note.info { color: var(--aa-brand-text); background: color-mix(in srgb, var(--aa-brand) 12%, transparent); border: 1px solid color-mix(in srgb, var(--aa-brand) 28%, transparent); }
+.au-auth-note.warn { color: var(--aa-accent); background: color-mix(in srgb, var(--aa-accent) 14%, transparent); border: 1px solid color-mix(in srgb, var(--aa-accent) 32%, transparent); }
+.au-auth-note.ok { color: var(--aa-green); background: color-mix(in srgb, var(--aa-green) 13%, transparent); border: 1px solid color-mix(in srgb, var(--aa-green) 30%, transparent); }
+.au-auth-note.err { color: var(--aa-red); background: color-mix(in srgb, var(--aa-red) 12%, transparent); border: 1px solid color-mix(in srgb, var(--aa-red) 30%, transparent); }
+
+/* password reveal toggle */
+.au-auth-eye { display: grid; place-items: center; padding: 0; background: none; border: 0; color: var(--aa-faint); cursor: pointer; transition: .15s; }
+.au-auth-eye:hover { color: var(--aa-dim); }
+.au-auth-eye svg { width: 17px; height: 17px; }
+
+/* right-aligned inline link (forgot password) */
+.au-auth-flink { display: block; width: fit-content; margin: 8px 0 0 auto; font: inherit; font-size: 11.5px; font-weight: 600; color: var(--aa-brand-text); background: none; border: 0; cursor: pointer; }
+.au-auth-flink:hover { text-decoration: underline; }
+
+/* inline field error */
+.au-auth-ferr { margin-top: 6px; font-size: 11.5px; color: var(--aa-red); }
+
+/* checkbox row */
+.au-auth-check { display: flex; align-items: center; gap: 9px; cursor: pointer; font-size: 12.5px; color: var(--aa-dim); }
+.au-auth-check input { width: 16px; height: 16px; accent-color: var(--aa-brand); cursor: pointer; flex: 0 0 auto; }
+
+/* spinner */
+.au-auth-spin { width: 15px; height: 15px; border-radius: 50%; border: 2px solid rgba(255,255,255,.45); border-top-color: #fff; animation: au-auth-spin .6s linear infinite; flex: 0 0 auto; }
+@keyframes au-auth-spin { to { transform: rotate(360deg); } }
+
+/* helper line, centered */
+.au-auth-help { margin-top: 14px; text-align: center; font-size: 11.5px; color: var(--aa-faint); }
+
+/* when used with the cosmic backdrop, hide the default grid wash */
+.au-auth.astral-space-bg .au-auth-bg { display: none; }
