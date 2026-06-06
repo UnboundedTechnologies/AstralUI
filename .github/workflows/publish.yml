@@ -29,6 +29,13 @@ jobs:
       - run: npm install -g npm@latest # ensure OIDC-capable npm (>= 11.5.1)
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: npm publish --access public
+      - name: Publish to npm (skip if this version already exists)
         # No NODE_AUTH_TOKEN: Trusted Publishing exchanges a short-lived OIDC
         # token automatically, and stamps the package with build provenance.
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@astralui/core@$VERSION" version >/dev/null 2>&1; then
+            echo "@astralui/core@$VERSION is already published - skipping."
+          else
+            npm publish --access public
+          fi
