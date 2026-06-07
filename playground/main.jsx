@@ -94,7 +94,7 @@ function ToastCard() {
 
 function PinCard() {
   const [code, setCode] = useState('');
-  return <Card title="PinInput"><AstralPinInput length={6} value={code} onChange={setCode} /><div style={{ marginTop: 10, fontSize: 12, color: 'var(--astral-color-dimmed)' }}>value: {code || '—'}</div></Card>;
+  return <Card title="PinInput"><AstralPinInput length={6} value={code} onChange={setCode} /><div style={{ marginTop: 10, fontSize: 12, color: 'var(--astral-color-dimmed)' }}>value: {code || '-'}</div></Card>;
 }
 
 function DateCard() {
