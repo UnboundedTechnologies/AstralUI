@@ -35,6 +35,18 @@
   animation: au-toast-in .18s ease;
 }
 
+/* Fade + collapse on dismiss (auto-close or manual). Duration must match EXIT_MS
+   in Toast.tsx so the element is unmounted only after the animation completes. */
+@keyframes au-toast-out{
+  from{ opacity: 1; transform: translateX(0) scale(1); max-height: 200px; margin-bottom: 0; }
+  to{ opacity: 0; transform: translateX(16px) scale(.98); max-height: 0; margin-bottom: -10px; }
+}
+.au-toast-out{
+  animation: au-toast-out .22s ease forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .au-toast-lead{
   flex: 0 0 auto;
   display: grid;
