@@ -2,15 +2,102 @@ import { useCallback, useEffect, useRef, useState, type ReactNode, type CSSPrope
 import { createPortal } from 'react-dom';
 import { IconX, IconChevronDown } from '@tabler/icons-react';
 
-function useDismiss(opened: boolean, onClose: () => void) {
+let dialogSeq = 0;
+
+/** Every dialog currently on screen, innermost last. */
+const dialogStack: HTMLElement[] = [];
+
+const FOCUSABLE = [
+  'a[href]',
+  'area[href]',
+  'button:not([disabled])',
+  'input:not([disabled]):not([type="hidden"])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  'iframe',
+  'object',
+  'embed',
+  '[contenteditable]',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+/**
+ * Turns a portalled overlay into a real dialog.
+ *
+ * Without this the panel is an anonymous div: assistive tech never announces
+ * it, focus stays on whatever opened it, and Tab walks straight out into the
+ * page behind the overlay - which is still fully operable underneath.
+ *
+ * Escape and the focus trap are scoped to the TOPMOST dialog. The previous
+ * implementation bound Escape per-instance, so with two dialogs open a single
+ * key press closed both at once.
+ */
+function useDialog(opened: boolean, onClose: () => void) {
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const idRef = useRef('');
+  if (!idRef.current) idRef.current = 'au-dialog-title-' + String(++dialogSeq);
+
+  // Kept in a ref so a caller passing a fresh arrow function every render does
+  // not tear the trap down and rebuild it (which would drop focus each time).
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
   useEffect(() => {
     if (!opened) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const restoreTo = document.activeElement as HTMLElement | null;
+    dialogStack.push(panel);
+    const isTop = () => dialogStack[dialogStack.length - 1] === panel;
+
+    const focusables = () =>
+      Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+        (el) => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement,
+      );
+
+    // Give a child's own autoFocus one frame to win before taking over, so a
+    // dialog that means to land on a particular field still does.
+    const raf = requestAnimationFrame(() => {
+      if (panel.contains(document.activeElement)) return;
+      const list = focusables();
+      // Prefer anything over the close button - landing on "Close" invites
+      // dismissing the dialog you just opened.
+      const target = list.find((el) => !el.classList.contains('au-modal-x')) ?? list[0] ?? panel;
+      target.focus();
+    });
+
+    const onKey = (e: KeyboardEvent) => {
+      if (!isTop()) return;
+      if (e.key === 'Escape') { onCloseRef.current(); return; }
+      if (e.key !== 'Tab') return;
+      const list = focusables();
+      if (!list.length) { e.preventDefault(); panel.focus(); return; }
+      const first = list[0];
+      const last = list[list.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (!panel.contains(active)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); return; }
+      if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', onKey, true);
+
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
-  }, [opened, onClose]);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('keydown', onKey, true);
+      const at = dialogStack.indexOf(panel);
+      if (at !== -1) dialogStack.splice(at, 1);
+      document.body.style.overflow = prevOverflow;
+      // Hand focus back to whatever opened this, so the keyboard does not jump
+      // to the top of the page.
+      if (restoreTo && document.contains(restoreTo)) restoreTo.focus();
+    };
+  }, [opened]);
+
+  return { panelRef, titleId: idRef.current };
 }
 
 interface ShellProps {
@@ -26,14 +113,23 @@ interface ShellProps {
 
 /** Centered Astral modal (portal + overlay + escape + click-outside). */
 export function AstralModal({ opened, onClose, title, brand, width = 460, zIndex, children }: ShellProps) {
-  useDismiss(opened, onClose);
+  const { panelRef, titleId } = useDialog(opened, onClose);
   if (!opened) return null;
   const style = { maxWidth: width, ...(brand ? { '--au-ic': brand } : {}) } as CSSProperties;
   return createPortal(
     <div className="au-modal-overlay" onMouseDown={onClose} style={zIndex != null ? { zIndex } : undefined}>
-      <div className="au-modal-panel" style={style} onMouseDown={(e) => e.stopPropagation()}>
+      <div
+        ref={panelRef}
+        className="au-modal-panel"
+        style={style}
+        onMouseDown={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        tabIndex={-1}
+      >
         <div className="au-modal-head">
-          <span className="au-modal-title">{title}</span>
+          <span className="au-modal-title" id={titleId}>{title}</span>
           <button type="button" className="au-modal-x" onClick={onClose} aria-label="Close"><IconX /></button>
         </div>
         <div className="au-modal-body">{children}</div>
@@ -45,14 +141,23 @@ export function AstralModal({ opened, onClose, title, brand, width = 460, zIndex
 
 /** Right-side Astral drawer. */
 export function AstralDrawer({ opened, onClose, title, brand, width = 440, zIndex, children }: ShellProps) {
-  useDismiss(opened, onClose);
+  const { panelRef, titleId } = useDialog(opened, onClose);
   if (!opened) return null;
   const style = { width, ...(brand ? { '--au-ic': brand } : {}) } as CSSProperties;
   return createPortal(
     <div className="au-drawer-overlay" onMouseDown={onClose} style={zIndex != null ? { zIndex } : undefined}>
-      <div className="au-drawer-panel" style={style} onMouseDown={(e) => e.stopPropagation()}>
+      <div
+        ref={panelRef}
+        className="au-drawer-panel"
+        style={style}
+        onMouseDown={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        tabIndex={-1}
+      >
         <div className="au-drawer-head">
-          <span className="au-drawer-title">{title}</span>
+          <span className="au-drawer-title" id={titleId}>{title}</span>
           <button type="button" className="au-modal-x" onClick={onClose} aria-label="Close"><IconX /></button>
         </div>
         <div className="au-drawer-body">{children}</div>

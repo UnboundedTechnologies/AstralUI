@@ -168,6 +168,9 @@
 
 /* ---------- Astral modal ---------- */
 .au-modal-overlay{ position:fixed; inset:0; z-index:300; background:rgba(8,8,12,.55); backdrop-filter:blur(2px); display:grid; place-items:center; padding:20px; }
+/* The panel takes focus itself only when it holds nothing focusable. It is a
+   container, not a control, so it should not paint a focus ring for that. */
+.au-modal-panel:focus, .au-drawer-panel:focus{ outline:none; }
 .au-modal-panel{ width:100%; background:var(--au-panel); border:1px solid var(--au-line); border-radius:var(--au-radius); box-shadow:0 24px 60px rgba(0,0,0,.45); max-height:calc(100dvh - 40px); overflow-y:auto; }
 .au-modal-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 20px 0; }
 .au-modal-title{ font-size:16px; font-weight:700; letter-spacing:-.01em; color:var(--au-text); }
