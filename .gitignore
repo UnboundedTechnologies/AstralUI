@@ -7,3 +7,5 @@ dist/
 *.tsbuildinfo
 .idea/
 .vscode/
+docs/select-a11y.js
+docs/select-a11y.css

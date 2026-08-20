@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, useId } from 'react';
 import { createPortal } from 'react-dom';
 import { IconX, IconChevronDown } from '@tabler/icons-react';
 
@@ -238,7 +238,7 @@ export function AstralPinInput({ length = 6, value, onChange, autoFocus }: {
 export interface AstralSelectOption { value: string; label: string; }
 
 /** Astral select with optional search/create/clear - combobox. */
-export function AstralSelect({ value, onChange, options, placeholder, disabled, searchable, searchPlaceholder, noResults, clearable, creatable }: {
+export function AstralSelect({ value, onChange, options, placeholder, disabled, searchable, searchPlaceholder, noResults, clearable, creatable, id, ariaLabel, ariaLabelledBy, clearLabel = 'Clear selection' }: {
   value: string | null;
   onChange: (value: string) => void;
   options: AstralSelectOption[];
@@ -249,11 +249,27 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
   noResults?: string;
   clearable?: boolean;
   creatable?: boolean;
+  /** Put this on the trigger so a visible <label htmlFor> can name it. */
+  id?: string;
+  /** Name the control when there is no visible label to point at. */
+  ariaLabel?: string;
+  /** Id of the visible label element naming this control. */
+  ariaLabelledBy?: string;
+  /** Accessible name for the clear button on a `clearable` select. */
+  clearLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  // Which option the keyboard is on. -1 = none. This is aria-activedescendant
+  // navigation: DOM focus stays on the trigger (or the search box), so the
+  // portal never steals the tab sequence.
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const reactId = useId();
+  const baseId = id ?? `au-select-${reactId}`;
+  const listboxId = `${baseId}-listbox`;
+  const optionId = (i: number) => `${baseId}-opt-${i}`;
   const [pos, setPos] = useState<{ left: number; top?: number; bottom?: number; width: number; maxHeight: number } | null>(null);
 
   const reposition = useCallback(() => {
@@ -273,7 +289,7 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) { setActiveIndex(-1); return; }
     reposition();
     const onScroll = () => reposition();
     const onResize = () => setOpen(false);
@@ -302,13 +318,111 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
     : options;
   const showCreate = !!creatable && !!q.trim() && !options.some(o => o.label.toLowerCase() === q.trim().toLowerCase());
 
+  // The rows the keyboard walks, in the order they are rendered, so the index
+  // means the same thing to both the key handler and the markup below.
+  const rows: string[] = [...filtered.map(o => o.value), ...(showCreate ? [q.trim()] : [])];
+
+  // Arrowing past the visible rows must scroll them into view - the menu has a
+  // maxHeight and the rows never take DOM focus, so the browser will not do it.
+  useEffect(() => {
+    if (!open || activeIndex < 0) return;
+    const el = menuRef.current?.querySelector(`#${CSS.escape(optionId(activeIndex))}`);
+    (el as HTMLElement | null)?.scrollIntoView({ block: 'nearest' });
+  }, [open, activeIndex, baseId]);
+
+  const commit = (index: number) => {
+    const picked = rows[index];
+    if (picked == null) return;
+    onChange(picked);
+    setOpen(false);
+    setQ('');
+    triggerRef.current?.focus();
+  };
+
+  const onKeyDown = (e: ReactKeyboardEvent) => {
+    if (disabled) return;
+    const key = e.key;
+    if (!open) {
+      // A closed combobox opens on ArrowDown/ArrowUp/Enter/Space, per the
+      // WAI-ARIA combobox pattern. Previously only a mouse click worked.
+      if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ') {
+        e.preventDefault();
+        setOpen(true);
+        setActiveIndex(0);
+      }
+      return;
+    }
+    if (key === 'Escape') {
+      // Stop here: an AstralSelect inside an AstralModal must close the SELECT,
+      // not the modal behind it.
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(false);
+      setQ('');
+      triggerRef.current?.focus();
+    } else if (key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex(i => (rows.length ? (i + 1) % rows.length : -1));
+    } else if (key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex(i => (rows.length ? (i <= 0 ? rows.length - 1 : i - 1) : -1));
+    } else if (key === 'Home') {
+      e.preventDefault();
+      setActiveIndex(rows.length ? 0 : -1);
+    } else if (key === 'End') {
+      e.preventDefault();
+      setActiveIndex(rows.length - 1);
+    } else if (key === 'Enter') {
+      e.preventDefault();
+      commit(activeIndex >= 0 ? activeIndex : 0);
+    } else if (key === 'Tab') {
+      // Tabbing away commits nothing and leaves no orphan menu behind.
+      setOpen(false);
+      setQ('');
+    }
+  };
+
   return (
     <div className="au-select">
-      <button ref={triggerRef} type="button" className="au-input au-select-trigger" disabled={disabled} onClick={() => setOpen(o => !o)}>
+      <button
+        ref={triggerRef}
+        id={baseId}
+        type="button"
+        className="au-input au-select-trigger"
+        disabled={disabled}
+        role="combobox"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-controls={open ? listboxId : undefined}
+        // Only while the TRIGGER holds focus. When searchable, autoFocus moves
+        // focus into the search box, which carries its own copy - and
+        // aria-activedescendant on an unfocused element means nothing.
+        aria-activedescendant={open && !searchable && activeIndex >= 0 ? optionId(activeIndex) : undefined}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        onClick={() => setOpen(o => !o)}
+        onKeyDown={onKeyDown}
+      >
         <span className={hasValue ? '' : 'ph'}>{hasValue ? display : placeholder}</span>
         {clearable && hasValue ? (
-          <span className="au-select-caret au-select-clear" role="button" tabIndex={-1}
-            onClick={(e) => { e.stopPropagation(); onChange(''); }}><IconX size={14} /></span>
+          // Was a <span role="button" tabIndex={-1}>: announced as a button and
+          // reachable by nobody, so a keyboard user could not clear the field.
+          // It is a real button now, and it stops the click bubbling to the
+          // trigger so clearing does not also open the menu.
+          <span
+            className="au-select-caret au-select-clear"
+            role="button"
+            tabIndex={0}
+            aria-label={clearLabel}
+            onClick={(e) => { e.stopPropagation(); onChange(''); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                onChange('');
+              }
+            }}
+          ><IconX size={14} /></span>
         ) : (
           <IconChevronDown size={15} className="au-select-caret" />
         )}
@@ -316,6 +430,10 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
       {open && !disabled && pos && createPortal(
         <div
           ref={menuRef}
+          id={listboxId}
+          role="listbox"
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabel ? undefined : ariaLabelledBy}
           className="au-select-menu"
           style={{ left: pos.left, top: pos.top, bottom: pos.bottom, width: pos.width, maxHeight: pos.maxHeight }}
         >
@@ -324,26 +442,48 @@ export function AstralSelect({ value, onChange, options, placeholder, disabled, 
               autoFocus
               className="au-select-search"
               placeholder={searchPlaceholder}
+              aria-label={searchPlaceholder}
+              aria-controls={listboxId}
+              // A screen reader follows aria-activedescendant on the element
+              // that HAS focus. autoFocus moves focus here, so the copy on the
+              // trigger stops being read the moment the box appears.
+              role="combobox"
+              aria-expanded
+              aria-autocomplete="list"
+              aria-activedescendant={activeIndex >= 0 ? optionId(activeIndex) : undefined}
               value={q}
-              onChange={(e) => setQ(e.currentTarget.value)}
+              onChange={(e) => { setQ(e.currentTarget.value); setActiveIndex(0); }}
+              onKeyDown={onKeyDown}
             />
           )}
           {filtered.length === 0 && !showCreate && <div className="au-select-empty">{noResults}</div>}
-          {filtered.map(o => (
-            <button
-              type="button"
+          {filtered.map((o, i) => (
+            <div
               key={o.value}
-              className={`au-select-opt${o.value === value ? ' on' : ''}`}
-              onClick={() => { onChange(o.value); setOpen(false); setQ(''); }}
+              id={optionId(i)}
+              role="option"
+              aria-selected={o.value === value}
+              // The rows are driven by aria-activedescendant, so they must NOT
+              // be in the tab sequence: the menu portals to document.body, and
+              // focusable rows there sent Tab to the end of the document.
+              className={`au-select-opt${o.value === value ? ' on' : ''}${i === activeIndex ? ' active' : ''}`}
+              onMouseEnter={() => setActiveIndex(i)}
+              onClick={() => commit(i)}
             >
               {o.label}
-            </button>
+            </div>
           ))}
           {showCreate && (
-            <button type="button" className="au-select-opt au-select-create"
-              onClick={() => { onChange(q.trim()); setOpen(false); setQ(''); }}>
+            <div
+              id={optionId(filtered.length)}
+              role="option"
+              aria-selected={false}
+              className={`au-select-opt au-select-create${filtered.length === activeIndex ? ' active' : ''}`}
+              onMouseEnter={() => setActiveIndex(filtered.length)}
+              onClick={() => commit(filtered.length)}
+            >
               + {q.trim()}
-            </button>
+            </div>
           )}
         </div>,
         document.body,
