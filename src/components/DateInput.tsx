@@ -34,9 +34,12 @@ interface Props {
   style?: CSSProperties;
   disabled?: boolean;
   'aria-label'?: string;
+  /** So a visible <label htmlFor> can name it. aria-label names the control
+   *  too, but only htmlFor also makes clicking the label focus it. */
+  id?: string;
 }
 
-export default function DateInput({ type = 'date', value, onChange, min, max, className, style, disabled, 'aria-label': ariaLabel }: Props) {
+export default function DateInput({ type = 'date', value, onChange, min, max, className, style, disabled, id, 'aria-label': ariaLabel }: Props) {
   const isTime = type === 'datetime-local';
   const fmt = isTime ? dateTimeToInputStr : dateToInputStr;
   const [s, setS] = useState(() => fmt(value));
@@ -64,6 +67,7 @@ export default function DateInput({ type = 'date', value, onChange, min, max, cl
       className={className}
       style={style}
       disabled={disabled}
+      id={id}
       aria-label={ariaLabel}
       value={s}
       min={min ? fmt(min) : undefined}
