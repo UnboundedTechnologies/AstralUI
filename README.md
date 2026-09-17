@@ -90,7 +90,7 @@ notifications.update({ id: 'x', message: 'Done', color: 'green', loading: false,
 |---|---|
 | `AstralModal` / `AstralDrawer` | Portalled, centered modal / right drawer (escape + click-outside). |
 | `AstralSelect` | Single-select combobox (searchable / clearable / creatable). |
-| `AstralMenu` | Anchored dropdown menu (items array). |
+| `AstralMenu` | Anchored dropdown menu (items array). Closes on an outside click or Escape; inside a dialog, Escape closes the menu only. |
 | `AstralPinInput` | Code/OTP input. |
 | `DateInput` | Freeze-proof native date / datetime-local input. |
 | `Spinner` | Theme-aware loading spinner. |

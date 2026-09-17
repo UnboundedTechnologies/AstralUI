@@ -533,14 +533,30 @@ export function AstralMenu({ trigger, items, align = 'end', width = 220 }: {
       if (menuRef.current?.contains(e.target as Node)) return;
       setOpen(false);
     };
+    // Escape closes this menu, and only this menu: a menu opened inside an
+    // AstralModal must not take the dialog down with it. useDialog binds its
+    // own Escape on DOCUMENT in capture, and bound it first (the dialog opened
+    // before this menu), so a document listener here could never run ahead of
+    // it. Capture starts at window, one step earlier, which is the only place
+    // that can stop the key before the dialog sees it. Focus returns to the
+    // trigger, where a keyboard user pressing Escape is still standing.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(false);
+      anchorRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
+    };
     window.addEventListener('scroll', onScroll, true);
     window.addEventListener('resize', onResize);
+    window.addEventListener('keydown', onKey, true);
     // Capture phase: AstralModal/AstralDrawer panels stopPropagation on mousedown,
     // which would otherwise block this outside-click close when the overlay lives inside one.
     document.addEventListener('mousedown', onDoc, true);
     return () => {
       window.removeEventListener('scroll', onScroll, true);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('keydown', onKey, true);
       document.removeEventListener('mousedown', onDoc, true);
     };
   }, [open, reposition]);
